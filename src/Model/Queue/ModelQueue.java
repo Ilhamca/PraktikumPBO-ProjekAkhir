@@ -5,7 +5,6 @@
 package Model.Queue;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  *
@@ -15,7 +14,7 @@ public class ModelQueue {
 
     private int id, patientId, queueNumber;
     private Status status;
-    private LocalDateTime queueDate;
+    private LocalDateTime date;
 
     public enum Status {
         WAITING,
@@ -34,7 +33,7 @@ public class ModelQueue {
         this.patientId = patientId;
         this.queueNumber = queueNumber;
         this.status = status;
-        this.queueDate = queueDate;
+        this.date = queueDate;
     }
 
     // 🔽 Getters and Setters
@@ -70,11 +69,11 @@ public class ModelQueue {
         this.status = status;
     }
 
-    public LocalDateTime getQueueDate() {
-        return queueDate;
+    public LocalDateTime getDate() {
+        return date;
     }
 
-    public void setQueueDate(LocalDateTime queueDate) {
-        this.queueDate = queueDate;
+    public void setQueueDate(LocalDateTime date) {
+        this.date = date;
     }
 }

@@ -5,7 +5,12 @@
 package DAO.Queue;
 
 import DAO.InterfaceDAO;
+import Model.Connector;
 import Model.Queue.ModelQueue;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 
 import java.util.List;
 
@@ -17,27 +22,103 @@ public class DAOQueue implements InterfaceDAO<ModelQueue> {
 
     @Override
     public void insert(ModelQueue obj) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            String query = "INSERT INTO queue (patient_id, number, status, date) VALUES (?,?,?,?)";
+            PreparedStatement statement;
+            statement = Connector.Connect().prepareStatement(query);
+            statement.setInt(1, obj.getPatientId());
+            statement.setInt(2, obj.getQueueNumber());
+            statement.setString(3, obj.getStatus().name());
+            statement.setTimestamp(4, Timestamp.valueOf(obj.getDate()));
+
+            statement.executeUpdate();
+            System.out.println("Successfully inserted into queue");
+            statement.close();
+
+        } catch (SQLException e) {
+            System.out.println("Input Failed: " + e.getLocalizedMessage());
+        }
     }
 
     @Override
     public void update(ModelQueue obj) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            String query = "UPDATE queue SET patient_id = ?, number = ?, status = ?, date = ? WHERE id = ?";
+            PreparedStatement statement = Connector.Connect().prepareStatement(query);
+
+            statement.setInt(1, obj.getPatientId());
+            statement.setInt(2, obj.getQueueNumber());
+            statement.setString(3, obj.getStatus().name());
+            statement.setTimestamp(4, Timestamp.valueOf(obj.getDate()));
+            statement.setInt(5, obj.getId());            
+        } catch (SQLException e) {
+            System.out.println("Update Failed: " + e.getLocalizedMessage());
+        }
     }
 
     @Override
     public void delete(ModelQueue obj) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            String query = "DELETE FROM queue WHERE id=?";
+            PreparedStatement statement;
+            statement = Connector.Connect().prepareStatement(query);
+            statement.setInt(1, obj.getId());
+
+            statement.executeUpdate();
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println("Input Failed: " + e.getLocalizedMessage());
+        }
     }
 
     @Override
     public ModelQueue getById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ModelQueue history = null;
+        try {
+            String query = "SELECT * FROM queue WHERE id = ?";
+            PreparedStatement statement = Connector.Connect().prepareStatement(query);
+            statement.setInt(1, id);
+
+            var result = statement.executeQuery();
+            if (result.next()) {
+                history = new ModelQueue(
+                        result.getInt("id"),
+                        result.getInt("patient_id"),
+                        result.getInt("number"),
+                        ModelQueue.Status.valueOf(result.getString("status").toUpperCase()),
+                        result.getTimestamp("timestamp").toLocalDateTime()
+                );
+            }
+            result.close();
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println("Failed getting id: " + e.getLocalizedMessage());
+        }
+        return history;
     }
 
     @Override
     public List<ModelQueue> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<ModelQueue> list = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM queue ORDER BY timestamp DESC";
+            PreparedStatement statement = Connector.Connect().prepareStatement(query);
+            var result = statement.executeQuery();
+
+            while (result.next()) {
+                ModelQueue queue = new ModelQueue(
+                        result.getInt("id"),
+                        result.getInt("patient_id"),
+                        result.getInt("number"),
+                        ModelQueue.Status.valueOf(result.getString("status").toUpperCase()),
+                        result.getTimestamp("date").toLocalDateTime()
+                );
+                list.add(queue);
+            }
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println("getAll Failed: " + e.getLocalizedMessage());
+        }
+        return list;
     }
-    
 }

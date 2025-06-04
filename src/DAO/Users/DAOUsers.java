@@ -5,7 +5,11 @@
 package DAO.Users;
 
 import DAO.InterfaceDAO;
+import Model.Connector;
 import Model.Users.ModelUsers;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import java.util.List;
 /**
@@ -16,27 +20,98 @@ public class DAOUsers implements InterfaceDAO<ModelUsers> {
 
     @Override
     public void insert(ModelUsers obj) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            String query = "INSERT INTO users (username, password, role) VALUES (?,?,?)";
+            PreparedStatement statement;
+            statement = Connector.Connect().prepareStatement(query);
+            statement.setString(1, obj.getUsername());
+            statement.setString(2, obj.getPassword());
+            statement.setString(3, obj.getRole().name());
+
+            statement.executeUpdate();
+            System.out.println("Successfully inserted into users");
+            statement.close();
+
+        } catch (SQLException e) {
+            System.out.println("Input Failed: " + e.getLocalizedMessage());
+        }
     }
 
     @Override
     public void update(ModelUsers obj) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            String query = "UPDATE users SET username = ?, password = ?, role = ? WHERE id = ?";
+            PreparedStatement statement = Connector.Connect().prepareStatement(query);
+            statement.setString(1, obj.getUsername());
+            statement.setString(2, obj.getPassword());
+            statement.setString(3, obj.getRole().name());
+            statement.setInt(4, obj.getId());
+        } catch (SQLException e) {
+            System.out.println("Update Failed: " + e.getLocalizedMessage());
+        }
     }
 
     @Override
     public void delete(ModelUsers obj) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            String query = "DELETE FROM users WHERE id=?";
+            PreparedStatement statement;
+            statement = Connector.Connect().prepareStatement(query);
+            statement.setInt(1, obj.getId());
+
+            statement.executeUpdate();
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println("Input Failed: " + e.getLocalizedMessage());
+        }
     }
 
     @Override
     public ModelUsers getById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ModelUsers users = null;
+        try {
+            String query = "SELECT * FROM users WHERE id = ?";
+            PreparedStatement statement = Connector.Connect().prepareStatement(query);
+            statement.setInt(1, id);
+
+            var result = statement.executeQuery();
+            if (result.next()) {
+                users = new ModelUsers(
+                        result.getInt("id"),
+                        result.getString("username"),
+                        result.getString("password"),
+                        ModelUsers.Role.valueOf(result.getString("Status").toUpperCase())
+                );
+            }
+            result.close();
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println("Failed getting id: " + e.getLocalizedMessage());
+        }
+        return users;
     }
 
     @Override
     public List<ModelUsers> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<ModelUsers> list = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM users ORDER BY timestamp DESC";
+            PreparedStatement statement = Connector.Connect().prepareStatement(query);
+            var result = statement.executeQuery();
+
+            while (result.next()) {
+                ModelUsers history = new ModelUsers(
+                        result.getInt("id"),
+                        result.getString("username"),
+                        result.getString("password"),
+                        ModelUsers.Role.valueOf(result.getString("status").toUpperCase())
+                );
+                list.add(history);
+            }
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println("getAll Failed: " + e.getLocalizedMessage());
+        }
+        return list;
     }
-    
 }
