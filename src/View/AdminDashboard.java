@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JList;
+
 /**
  *
  * @author Iam
@@ -51,7 +52,6 @@ public class AdminDashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -131,6 +131,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         jMenu2.add(addUserMenuItem);
 
         addPatientsMenuItem.setText("Patients");
+        addPatientsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addPatientsMenuItemActionPerformed(evt);
+            }
+        });
         jMenu2.add(addPatientsMenuItem);
 
         jMenuBar1.add(jMenu2);
@@ -142,65 +147,16 @@ public class AdminDashboard extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addContainerGap(272, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE)
         );
 
-    // --- Begin Queue Panel code ---
-    queuePanel = new JPanel();
-    queuePanel.setLayout(new java.awt.BorderLayout());
-
-    javax.swing.JPanel inputPanel = new javax.swing.JPanel();
-    queueNameField = new JTextField(15);
-    addToQueueButton = new JButton("Add to Queue");
-    inputPanel.add(new javax.swing.JLabel("Patient Name:"));
-    inputPanel.add(queueNameField);
-    inputPanel.add(addToQueueButton);
-
-    JButton removeFromQueueButton = new JButton("Remove from Queue");
-    inputPanel.add(removeFromQueueButton);
-
-    // Add action listener for remove button
-    removeFromQueueButton.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            int selectedIndex = queueList.getSelectedIndex();
-            if (selectedIndex != -1) {
-                patientQueue.remove(selectedIndex);
-                queueListModel.remove(selectedIndex);
-            } else if (!patientQueue.isEmpty()) {
-                // Remove first if nothing is selected
-                patientQueue.removeFirst();
-                queueListModel.remove(0);
-            }
-        }
-    });
-    
-    queueList = new JList<>(queueListModel);
-    javax.swing.JScrollPane queueScrollPane = new javax.swing.JScrollPane(queueList);
-
-    queuePanel.add(inputPanel, java.awt.BorderLayout.NORTH);
-    queuePanel.add(queueScrollPane, java.awt.BorderLayout.CENTER);
-
-    jTabbedPane1.addTab("Queue Edit", queuePanel);
-
-    addToQueueButton.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            String name = queueNameField.getText().trim();
-            if (!name.isEmpty()) {
-                patientQueue.add(name);
-                queueListModel.addElement(name);
-                queueNameField.setText("");
-            }
-        }
-    });
-    pack();
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void logoutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutMenuItemActionPerformed
@@ -225,6 +181,10 @@ public class AdminDashboard extends javax.swing.JFrame {
     private void addUserMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserMenuItemActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_addUserMenuItemActionPerformed
+
+    private void addPatientsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPatientsMenuItemActionPerformed
+
+    }//GEN-LAST:event_addPatientsMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -270,7 +230,6 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JMenuItem logoutMenuItem;
     private javax.swing.JMenuItem patientsMenuItem;
     private javax.swing.JMenuItem queueMenuItem;
