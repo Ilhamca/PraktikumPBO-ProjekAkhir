@@ -10,7 +10,6 @@ import Model.History.ModelHistory;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -59,7 +58,7 @@ public class DAOHistory implements InterfaceDAO<ModelHistory> {
     @Override
     public void delete(ModelHistory obj) {
         try {
-            String query = "DELETE FROM history WHERE ID=?";
+            String query = "DELETE FROM history WHERE id=?";
             PreparedStatement statement;
             statement = Connector.Connect().prepareStatement(query);
             statement.setInt(1, obj.getId());
@@ -75,7 +74,7 @@ public class DAOHistory implements InterfaceDAO<ModelHistory> {
     public ModelHistory getById(int id) {
         ModelHistory history = null;
         try {
-            String query = "SELECT *FROM history WHERE id = ?";
+            String query = "SELECT * FROM history WHERE id = ?";
             PreparedStatement statement = Connector.Connect().prepareStatement(query);
             statement.setInt(1, id);
 
