@@ -95,7 +95,7 @@ public class DAOUsers implements InterfaceDAO<ModelUsers> {
     public List<ModelUsers> getAll() {
         List<ModelUsers> list = new ArrayList<>();
         try {
-            String query = "SELECT * FROM users ORDER BY timestamp DESC";
+            String query = "SELECT * FROM users ORDER BY role ASC";
             PreparedStatement statement = Connector.Connect().prepareStatement(query);
             var result = statement.executeQuery();
 
@@ -104,7 +104,7 @@ public class DAOUsers implements InterfaceDAO<ModelUsers> {
                         result.getInt("id"),
                         result.getString("username"),
                         result.getString("password"),
-                        ModelUsers.Role.valueOf(result.getString("status").toUpperCase())
+                        ModelUsers.Role.valueOf(result.getString("role").toUpperCase())
                 );
                 list.add(history);
             }
@@ -130,7 +130,7 @@ public class DAOUsers implements InterfaceDAO<ModelUsers> {
                 result.getInt("id"),
                 result.getString("username"),
                 result.getString("password"),
-                ModelUsers.Role.valueOf(result.getString("Status").toUpperCase())
+                ModelUsers.Role.valueOf(result.getString("role").toUpperCase())
             );
         }
 

@@ -5,7 +5,9 @@
 package Controller;
 
 import DAO.Patients.DAOPatients;
+import Model.Patients.*;
 import Model.Patients.ModelPatients;
+import javax.swing.table.TableModel;
 import java.util.List;
 
 /**
@@ -13,7 +15,8 @@ import java.util.List;
  * @author Iam
  */
 public class ControllerPatients {
-        private DAOPatients dao;
+
+    private DAOPatients dao;
 
     public ControllerPatients() {
         dao = new DAOPatients();
@@ -38,4 +41,11 @@ public class ControllerPatients {
     public List<ModelPatients> getAll() {
         return dao.getAll();
     }
+
+    public static TableModel getTableModel() {
+        DAOPatients dao = new DAOPatients();
+        List<ModelPatients> patients = dao.getAll();
+        return new TablePatients(patients);
+    }
+
 }

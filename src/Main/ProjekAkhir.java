@@ -14,7 +14,10 @@ public class ProjekAkhir {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        // Run GUI on the Event Dispatch Thread (EDT)
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            new View.LoginForm().setVisible(true);
+        });
     }
-    
+
 }

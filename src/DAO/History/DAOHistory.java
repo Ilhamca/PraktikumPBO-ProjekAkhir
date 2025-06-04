@@ -109,7 +109,7 @@ public class DAOHistory implements InterfaceDAO<ModelHistory> {
                         result.getInt("id"),
                         result.getInt("patient_id"),
                         result.getInt("queue_number"),
-                        ModelHistory.Status.valueOf(result.getString("Status").toUpperCase()),
+                        ModelHistory.Status.valueOf(result.getString("status").toUpperCase()),
                         result.getTimestamp("timestamp").toLocalDateTime()
                 );
                 list.add(history);

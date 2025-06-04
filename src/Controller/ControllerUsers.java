@@ -1,12 +1,18 @@
+package Controller;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Controller;
-
 import DAO.Users.DAOUsers;
 import Model.Users.ModelUsers;
+import Model.Users.TableUsers;
+import View.*;
+
+import View.LoginForm;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -14,7 +20,7 @@ import java.util.List;
  */
 public class ControllerUsers {
 
-    private DAOUsers dao;
+    private final DAOUsers dao;
 
     public ControllerUsers() {
         dao = new DAOUsers();
@@ -42,5 +48,34 @@ public class ControllerUsers {
 
     public ModelUsers login(String username, String password) {
         return dao.login(username, password);
+    }
+
+    public void handleLogin(LoginForm form, String username, String password) {
+        ModelUsers user = login(username, password);
+
+        if (user != null) {
+            // Show message (optional)
+            JOptionPane.showMessageDialog(form, "Login successful as " + user.getRole());
+
+            // Open role-based dashboard
+            switch (user.getRole()) {
+                case ADMIN ->
+                    new AdminDashboard(user).setVisible(true);
+                case STAFF ->
+                    new StaffDashboard(user).setVisible(true);
+            }
+
+            // Close login form
+            form.dispose();
+
+        } else {
+            JOptionPane.showMessageDialog(form, "Username or Password incorrect");
+        }
+    }
+
+    public static TableModel getTableModel() {
+        DAOUsers dao = new DAOUsers();
+        List<ModelUsers> users = dao.getAll();
+        return new TableUsers(users);
     }
 }

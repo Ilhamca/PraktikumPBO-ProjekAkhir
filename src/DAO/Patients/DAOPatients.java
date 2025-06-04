@@ -98,7 +98,7 @@ public class DAOPatients implements InterfaceDAO<ModelPatients> {
     public List<ModelPatients> getAll() {
         List<ModelPatients> list = new ArrayList<>();
         try {
-            String query = "SELECT * FROM patients ORDER BY timestamp DESC";
+            String query = "SELECT * FROM patients ORDER BY name DESC";
             PreparedStatement statement = Connector.Connect().prepareStatement(query);
             var result = statement.executeQuery();
 

@@ -101,7 +101,7 @@ public class DAOQueue implements InterfaceDAO<ModelQueue> {
     public List<ModelQueue> getAll() {
         List<ModelQueue> list = new ArrayList<>();
         try {
-            String query = "SELECT * FROM queue ORDER BY timestamp DESC";
+            String query = "SELECT * FROM queue ORDER BY date DESC";
             PreparedStatement statement = Connector.Connect().prepareStatement(query);
             var result = statement.executeQuery();
 

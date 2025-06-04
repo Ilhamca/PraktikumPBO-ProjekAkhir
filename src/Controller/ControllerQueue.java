@@ -6,14 +6,17 @@ package Controller;
 
 import DAO.Queue.DAOQueue;
 import Model.Queue.ModelQueue;
+import Model.Queue.TableQueue;
 import java.util.List;
+import javax.swing.table.TableModel;
 
 /**
  *
  * @author Iam
  */
 public class ControllerQueue {
-        private DAOQueue dao;
+
+    private DAOQueue dao;
 
     public ControllerQueue() {
         dao = new DAOQueue();
@@ -37,5 +40,11 @@ public class ControllerQueue {
 
     public List<ModelQueue> getAll() {
         return dao.getAll();
+    }
+
+    public static TableModel getTableModel() {
+        DAOQueue dao = new DAOQueue();
+        List<ModelQueue> queueList = dao.getAll();
+        return new TableQueue(queueList);
     }
 }
