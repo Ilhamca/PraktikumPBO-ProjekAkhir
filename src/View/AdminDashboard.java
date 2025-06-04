@@ -11,12 +11,24 @@ import Controller.ControllerUsers;
 import Model.Users.ModelUsers;
 import javax.swing.JFrame;
 import javax.swing.table.TableModel;
-
+import java.util.LinkedList;
+import javax.swing.DefaultListModel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JList;
 /**
  *
  * @author Iam
  */
 public class AdminDashboard extends javax.swing.JFrame {
+
+    private LinkedList<String> patientQueue = new LinkedList<>();
+    private DefaultListModel<String> queueListModel = new DefaultListModel<>();
+    private JPanel queuePanel;
+    private JTextField queueNameField;
+    private JButton addToQueueButton;
+    private JList<String> queueList;
 
     /**
      * Creates new form AdminDashboard
@@ -141,7 +153,54 @@ public class AdminDashboard extends javax.swing.JFrame {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE)
         );
 
-        pack();
+    // --- Begin Queue Panel code ---
+    queuePanel = new JPanel();
+    queuePanel.setLayout(new java.awt.BorderLayout());
+
+    javax.swing.JPanel inputPanel = new javax.swing.JPanel();
+    queueNameField = new JTextField(15);
+    addToQueueButton = new JButton("Add to Queue");
+    inputPanel.add(new javax.swing.JLabel("Patient Name:"));
+    inputPanel.add(queueNameField);
+    inputPanel.add(addToQueueButton);
+
+    JButton removeFromQueueButton = new JButton("Remove from Queue");
+    inputPanel.add(removeFromQueueButton);
+
+    // Add action listener for remove button
+    removeFromQueueButton.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            int selectedIndex = queueList.getSelectedIndex();
+            if (selectedIndex != -1) {
+                patientQueue.remove(selectedIndex);
+                queueListModel.remove(selectedIndex);
+            } else if (!patientQueue.isEmpty()) {
+                // Remove first if nothing is selected
+                patientQueue.removeFirst();
+                queueListModel.remove(0);
+            }
+        }
+    });
+    
+    queueList = new JList<>(queueListModel);
+    javax.swing.JScrollPane queueScrollPane = new javax.swing.JScrollPane(queueList);
+
+    queuePanel.add(inputPanel, java.awt.BorderLayout.NORTH);
+    queuePanel.add(queueScrollPane, java.awt.BorderLayout.CENTER);
+
+    jTabbedPane1.addTab("Queue Edit", queuePanel);
+
+    addToQueueButton.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            String name = queueNameField.getText().trim();
+            if (!name.isEmpty()) {
+                patientQueue.add(name);
+                queueListModel.addElement(name);
+                queueNameField.setText("");
+            }
+        }
+    });
+    pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void logoutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutMenuItemActionPerformed
