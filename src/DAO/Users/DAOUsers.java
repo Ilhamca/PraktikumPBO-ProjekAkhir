@@ -114,4 +114,32 @@ public class DAOUsers implements InterfaceDAO<ModelUsers> {
         }
         return list;
     }
+    
+    public ModelUsers login(String username, String password) {
+    ModelUsers user = null;
+    try {
+        String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+        PreparedStatement statement = Connector.Connect().prepareStatement(query);
+        statement.setString(1, username);
+        statement.setString(2, password); // Hash this in real apps
+
+        var result = statement.executeQuery();
+
+        if (result.next()) {
+            user = new ModelUsers(
+                result.getInt("id"),
+                result.getString("username"),
+                result.getString("password"),
+                ModelUsers.Role.valueOf(result.getString("Status").toUpperCase())
+            );
+        }
+
+        result.close();
+        statement.close();
+    } catch (SQLException e) {
+        System.out.println("Login failed: " + e.getMessage());
+    }
+    return user;
+}
+    
 }
