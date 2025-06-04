@@ -4,6 +4,7 @@
  */
 package Model.Queue;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -14,7 +15,7 @@ public class ModelQueue {
 
     private int id, patientId, queueNumber;
     private Status status;
-    private Date queueDate;
+    private LocalDateTime queueDate;
 
     public enum Status {
         WAITING,
@@ -28,7 +29,7 @@ public class ModelQueue {
     }
 
     // Parameterized Constructor - Instantly initialize object in one line
-    public ModelQueue(int id, int patientId, int queueNumber, Status status, Date queueDate) {
+    public ModelQueue(int id, int patientId, int queueNumber, Status status, LocalDateTime queueDate) {
         this.id = id;
         this.patientId = patientId;
         this.queueNumber = queueNumber;
@@ -69,11 +70,11 @@ public class ModelQueue {
         this.status = status;
     }
 
-    public Date getQueueDate() {
+    public LocalDateTime getQueueDate() {
         return queueDate;
     }
 
-    public void setQueueDate(Date queueDate) {
+    public void setQueueDate(LocalDateTime queueDate) {
         this.queueDate = queueDate;
     }
 }

@@ -4,7 +4,7 @@
  */
 package Model.History;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -14,7 +14,7 @@ public class ModelHistory {
 
     private int id, patientId, queueNumber;
     private Status status;
-    private Date timestamp;
+    private LocalDateTime timestamp;
 
     public enum Status {
         WAITING,
@@ -28,7 +28,7 @@ public class ModelHistory {
     }
 
     // Parameterized Constructor - Instantly initialize object in one line
-    public ModelHistory(int id, int patientId, int queueNumber, Status status, Date timestamp) {
+    public ModelHistory(int id, int patientId, int queueNumber, Status status, LocalDateTime timestamp) {
         this.id = id;
         this.patientId = patientId;
         this.queueNumber = queueNumber;
@@ -69,11 +69,11 @@ public class ModelHistory {
         this.status = status;
     }
 
-    public Date getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 }
