@@ -4,8 +4,7 @@
  */
 package Model.Patients;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -16,14 +15,14 @@ public class ModelPatients {
     private int id;
     private String name;
     private String phone;
-    private LocalDateTime dateOfBirth;
+    private LocalDate dateOfBirth;
 
     // Default Constructor - Creates all fields unset (null or 0)
     public ModelPatients() {
     }
 
     // Parameterized Constructor - Instantly initialize object in one line
-    public ModelPatients(int id, String name, String phone, LocalDateTime dateOfBirth) {
+    public ModelPatients(int id, String name, String phone, LocalDate dateOfBirth) {
         this.id = id;
         this.name = name;
         this.phone = phone;
@@ -55,11 +54,11 @@ public class ModelPatients {
         this.phone = phone;
     }
 
-    public LocalDateTime getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDateTime dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 }

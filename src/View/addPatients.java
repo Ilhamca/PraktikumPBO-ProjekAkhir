@@ -4,11 +4,12 @@
  */
 package View;
 
-import Config.Koneksi;
+import static Model.Connector.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author Iam
@@ -127,39 +128,7 @@ public class addPatients extends javax.swing.JPanel {
     }//GEN-LAST:event_nameFieldActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        String name = nameField.getText();
-        String phone = phoneField.getText();
-        java.util.Date dob = jDateChooser1.getDate();
-
-        if (name.isEmpty() || phone.isEmpty() || dob == null) {
-            JOptionPane.showMessageDialog(this, "Please fill all fields!", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        try {
-            Connection conn = Koneksi.getConnection();
-            String sql = "INSERT INTO patients (name, phone, dob) VALUES (?, ?, ?)";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, name);
-            pst.setString(2, phone);
-
-            // Format date to yyyy-MM-dd
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String dobStr = sdf.format(dob);
-            pst.setString(3, dobStr);
-
-            int inserted = pst.executeUpdate();
-            if (inserted > 0) {
-                JOptionPane.showMessageDialog(this, "Patient added successfully!");
-                nameField.setText("");
-                phoneField.setText("");
-                jDateChooser1.setDate(null);
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed to add patient.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        Controller.ControllerPatients.handleAddPatient(nameField, phoneField, jDateChooser1, this);
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed

@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import java.util.List;
+
 /**
  *
  * @author Iam
@@ -22,13 +23,12 @@ public class DAOPatients implements InterfaceDAO<ModelPatients> {
     @Override
     public void insert(ModelPatients obj) {
         try {
-            String query = "INSERT INTO patients (id, name, phone, dob) VALUES (?,?,?,?)";
+            String query = "INSERT INTO patients (name, phone, dob) VALUES (?,?,?)";
             PreparedStatement statement;
             statement = Connector.Connect().prepareStatement(query);
-            statement.setInt(1, obj.getId());
-            statement.setString(2, obj.getName());
-            statement.setString(3, obj.getPhone());
-            statement.setTimestamp(4, Timestamp.valueOf(obj.getDateOfBirth()));
+            statement.setString(1, obj.getName());
+            statement.setString(2, obj.getPhone());
+            statement.setDate(3, java.sql.Date.valueOf(obj.getDateOfBirth()));
 
             statement.executeUpdate();
             System.out.println("Successfully inserted into patients");
@@ -36,22 +36,22 @@ public class DAOPatients implements InterfaceDAO<ModelPatients> {
 
         } catch (SQLException e) {
             System.out.println("Input Failed: " + e.getLocalizedMessage());
-        }    
+        }
     }
 
     @Override
     public void update(ModelPatients obj) {
         try {
-            String query = "UPDATE patients SET id = ?, name = ?, phone = ?, dob = ? WHERE id = ?";
+            String query = "UPDATE patients SET name = ?, phone = ?, dob = ? WHERE id = ?";
             PreparedStatement statement = Connector.Connect().prepareStatement(query);
 
-            statement.setInt(1, obj.getId());
-            statement.setString(2, obj.getName());
-            statement.setString(3, obj.getPhone());
-            statement.setTimestamp(4, Timestamp.valueOf(obj.getDateOfBirth()));
+            statement.setString(1, obj.getName());
+            statement.setString(2, obj.getPhone());
+            statement.setDate(3, java.sql.Date.valueOf(obj.getDateOfBirth()));
+            statement.setInt(4, obj.getId());
         } catch (SQLException e) {
             System.out.println("Update Failed: " + e.getLocalizedMessage());
-        }        
+        }
     }
 
     @Override
@@ -71,8 +71,8 @@ public class DAOPatients implements InterfaceDAO<ModelPatients> {
 
     @Override
     public ModelPatients getById(int id) {
-                ModelPatients patients = null;
-                try {
+        ModelPatients patients = null;
+        try {
             String query = "SELECT * FROM patients WHERE id = ?";
             PreparedStatement statement = Connector.Connect().prepareStatement(query);
             statement.setInt(1, id);
@@ -83,7 +83,7 @@ public class DAOPatients implements InterfaceDAO<ModelPatients> {
                         result.getInt("id"),
                         result.getString("name"),
                         result.getString("phone"),
-                        result.getTimestamp("dob").toLocalDateTime()
+                        result.getDate("dob").toLocalDate()
                 );
             }
             result.close();
@@ -107,7 +107,7 @@ public class DAOPatients implements InterfaceDAO<ModelPatients> {
                         result.getInt("id"),
                         result.getString("name"),
                         result.getString("phone"),
-                        result.getTimestamp("dob").toLocalDateTime()
+                        result.getDate("dob").toLocalDate()
                 );
                 list.add(history);
             }
@@ -117,5 +117,5 @@ public class DAOPatients implements InterfaceDAO<ModelPatients> {
         }
         return list;
     }
-    
+
 }
