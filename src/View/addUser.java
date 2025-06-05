@@ -4,10 +4,11 @@
  */
 package View;
 
-import Config.Koneksi;
+import Controller.ControllerUsers;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author Iam
@@ -25,29 +26,7 @@ public class addUser extends javax.swing.JPanel {
                 String username = NameUser.getText().trim();
                 String password = new String(PassUser.getPassword());
 
-                if (username.isEmpty() || password.isEmpty()) {
-                    JOptionPane.showMessageDialog(addUser.this, "Please fill all fields!", "Input Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                try {
-                    Connection conn = Koneksi.getConnection();
-                    String sql = "INSERT INTO users (username, password) VALUES (?, ?)";
-                    PreparedStatement pst = conn.prepareStatement(sql);
-                    pst.setString(1, username);
-                    pst.setString(2, password);
-
-                    int inserted = pst.executeUpdate();
-                    if (inserted > 0) {
-                        JOptionPane.showMessageDialog(addUser.this, "User added successfully!");
-                        NameUser.setText("");
-                        PassUser.setText("");
-                    } else {
-                        JOptionPane.showMessageDialog(addUser.this, "Failed to add user.", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(addUser.this, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                }
+                ControllerUsers.addUser(username, password, addUser.this);
             }
         });
 
@@ -57,7 +36,6 @@ public class addUser extends javax.swing.JPanel {
                 PassUser.setText("");
             }
         });
-    }        
     }
 
     /**

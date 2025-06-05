@@ -73,7 +73,7 @@ public class ModelQueue {
         return date;
     }
 
-    public void setQueueDate(LocalDateTime date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 }

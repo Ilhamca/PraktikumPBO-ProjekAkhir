@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import java.util.List;
+
 /**
  *
  * @author Iam
@@ -114,32 +115,49 @@ public class DAOUsers implements InterfaceDAO<ModelUsers> {
         }
         return list;
     }
-    
+
     public ModelUsers login(String username, String password) {
-    ModelUsers user = null;
-    try {
-        String query = "SELECT * FROM users WHERE username = ? AND password = ?";
-        PreparedStatement statement = Connector.Connect().prepareStatement(query);
-        statement.setString(1, username);
-        statement.setString(2, password); // Hash this in real apps
+        ModelUsers user = null;
+        try {
+            String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+            PreparedStatement statement = Connector.Connect().prepareStatement(query);
+            statement.setString(1, username);
+            statement.setString(2, password); // Hash this in real apps
 
-        var result = statement.executeQuery();
+            var result = statement.executeQuery();
 
-        if (result.next()) {
-            user = new ModelUsers(
-                result.getInt("id"),
-                result.getString("username"),
-                result.getString("password"),
-                ModelUsers.Role.valueOf(result.getString("role").toUpperCase())
-            );
+            if (result.next()) {
+                user = new ModelUsers(
+                        result.getInt("id"),
+                        result.getString("username"),
+                        result.getString("password"),
+                        ModelUsers.Role.valueOf(result.getString("role").toUpperCase())
+                );
+            }
+
+            result.close();
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println("Login failed: " + e.getMessage());
         }
-
-        result.close();
-        statement.close();
-    } catch (SQLException e) {
-        System.out.println("Login failed: " + e.getMessage());
+        return user;
     }
-    return user;
-}
-    
+        
+
+    public static boolean insertUser(String username, String password) {
+        try {
+            String sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+            PreparedStatement pst = Connector.Connect().prepareStatement(sql);
+            pst.setString(1, username);
+            pst.setString(2, password);
+
+            int inserted = pst.executeUpdate();
+            pst.close();
+
+            return inserted > 0;
+        } catch (Exception e) {
+            System.err.println("DB Error: " + e.getMessage());
+            return false;
+        }
+    }
 }

@@ -125,7 +125,7 @@ public class addPatients extends javax.swing.JFrame {
     }
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        Controller.ControllerPatients.handleAddPatient(nameField, phoneField, jDateChooser1, this);
+        Controller.ControllerPatients.handleAddPatient(nameField, phoneField, jDateChooser1);
     }
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {

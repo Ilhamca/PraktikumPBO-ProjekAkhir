@@ -8,6 +8,8 @@ import DAO.Patients.DAOPatients;
 import Model.Connector;
 import Model.Patients.*;
 import Model.Patients.ModelPatients;
+import com.toedter.calendar.JDateChooser;
+import java.awt.Component;
 import java.time.LocalDate;
 import javax.swing.table.TableModel;
 import java.util.List;
@@ -20,6 +22,8 @@ import javax.swing.JTextField;
  * @author Iam
  */
 public class ControllerPatients {
+
+    private static Component panel;
 
     private DAOPatients dao;
 
@@ -53,7 +57,7 @@ public class ControllerPatients {
         return new TablePatients(patients);
     }
 
-    public static void handleAddPatient(JTextField nameField, JTextField phoneField, com.toedter.calendar.JDateChooser dateChooser, JPanel panel) {
+    public static void handleAddPatient(JTextField nameField, JTextField phoneField, JDateChooser dateChooser) {
         String name = nameField.getText();
         String phone = phoneField.getText();
         java.util.Date dobUtil = dateChooser.getDate();

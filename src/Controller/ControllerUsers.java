@@ -4,6 +4,7 @@ package Controller;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+import View.AdminDashboard;
 import DAO.Users.DAOUsers;
 import Model.Users.ModelUsers;
 import Model.Users.TableUsers;
@@ -12,6 +13,7 @@ import View.*;
 import View.LoginForm;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.table.TableModel;
 
 /**
@@ -77,5 +79,20 @@ public class ControllerUsers {
         DAOUsers dao = new DAOUsers();
         List<ModelUsers> users = dao.getAll();
         return new TableUsers(users);
+    }
+
+    public static void addUser(String username, String password, JPanel parentPanel) {
+        if (username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(parentPanel, "Please fill all fields!", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        boolean success = DAOUsers.insertUser(username, password);
+
+        if (success) {
+            JOptionPane.showMessageDialog(parentPanel, "User added successfully!");
+        } else {
+            JOptionPane.showMessageDialog(parentPanel, "Failed to add user.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

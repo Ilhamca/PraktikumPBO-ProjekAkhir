@@ -7,6 +7,8 @@ package Controller;
 import DAO.Queue.DAOQueue;
 import Model.Queue.ModelQueue;
 import Model.Queue.TableQueue;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.swing.table.TableModel;
 
@@ -46,5 +48,19 @@ public class ControllerQueue {
         DAOQueue dao = new DAOQueue();
         List<ModelQueue> queueList = dao.getAll();
         return new TableQueue(queueList);
+    }
+
+    public void callQueue(int patientId) {
+        int lastQueueNumber = dao.getLastQueueNumber();
+        int newQueueNumber = lastQueueNumber + 1;
+
+        ModelQueue queue = new ModelQueue();
+        queue.setId(0);
+        queue.setPatientId(patientId);
+        queue.setQueueNumber(newQueueNumber);
+        queue.setStatus(ModelQueue.Status.WAITING);
+        queue.setDate(LocalDateTime.now());
+
+        dao.insert(queue);
     }
 }

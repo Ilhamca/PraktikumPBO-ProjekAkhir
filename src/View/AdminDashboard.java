@@ -1,9 +1,10 @@
+package View;
+
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package View;
-
 import Controller.ControllerPatients;
 import Controller.ControllerQueue;
 import Controller.ControllerUsers;
@@ -185,7 +186,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         // Refresh the frame to show the new panel
         revalidate();
         repaint();
-    }
     }//GEN-LAST:event_addUserMenuItemActionPerformed
 
     private void addPatientsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPatientsMenuItemActionPerformed
@@ -230,7 +230,6 @@ public class AdminDashboard extends javax.swing.JFrame {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem addPatientsMenuItem;
     private javax.swing.JMenuItem addUserMenuItem;
@@ -245,4 +244,5 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JTable table;
     private javax.swing.JMenuItem usersMenuItem;
     // End of variables declaration//GEN-END:variables
+
 }

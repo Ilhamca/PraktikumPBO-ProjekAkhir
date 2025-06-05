@@ -50,7 +50,7 @@ public class DAOQueue implements InterfaceDAO<ModelQueue> {
             statement.setInt(2, obj.getQueueNumber());
             statement.setString(3, obj.getStatus().name());
             statement.setTimestamp(4, Timestamp.valueOf(obj.getDate()));
-            statement.setInt(5, obj.getId());            
+            statement.setInt(5, obj.getId());
         } catch (SQLException e) {
             System.out.println("Update Failed: " + e.getLocalizedMessage());
         }
@@ -120,5 +120,22 @@ public class DAOQueue implements InterfaceDAO<ModelQueue> {
             System.out.println("getAll Failed: " + e.getLocalizedMessage());
         }
         return list;
+    }
+
+    public int getLastQueueNumber() {
+        int lastNumber = 0;
+        try {
+            String sql = "SELECT MAX(queue_number) AS max_number FROM queue";
+            PreparedStatement stmt = Connector.Connect().prepareStatement(sql);
+            var rs = stmt.executeQuery();
+            if (rs.next()) {
+                lastNumber = rs.getInt("max_number");
+            }
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            System.out.println("Error getting last queue number: " + e.getMessage());
+        }
+        return lastNumber;
     }
 }
