@@ -179,11 +179,20 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_queueMenuItemActionPerformed
 
     private void addUserMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserMenuItemActionPerformed
-        // TODO add your handling code here:
+        addUser addUserPanel = new addUser();
+        // Set the content pane of the frame to the addUser panel
+        setContentPane(addUserPanel);
+        // Refresh the frame to show the new panel
+        revalidate();
+        repaint();
+    }
     }//GEN-LAST:event_addUserMenuItemActionPerformed
 
     private void addPatientsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPatientsMenuItemActionPerformed
-
+        addPatients addPatientsPanel = new addPatients();
+        setContentPane(addPatientsPanel);
+        revalidate();
+        repaint();
     }//GEN-LAST:event_addPatientsMenuItemActionPerformed
 
     /**
