@@ -4,13 +4,13 @@ package Controller;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-import View.AdminDashboard;
+import View.StaffDashboard.StaffDashboard;
+import View.AdminDashboard.AdminDashboard;
 import DAO.Users.DAOUsers;
 import Model.Users.ModelUsers;
 import Model.Users.TableUsers;
-import View.*;
 
-import View.LoginForm;
+import View.Login.LoginForm;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -61,10 +61,18 @@ public class ControllerUsers {
 
             // Open role-based dashboard
             switch (user.getRole()) {
-                case ADMIN ->
-                    new AdminDashboard(user).setVisible(true);
-                case STAFF ->
-                    new StaffDashboard(user).setVisible(true);
+                case ADMIN -> {
+                    AdminDashboard adminDash = new AdminDashboard(user);
+                    adminDash.setLocationRelativeTo(null);
+                    adminDash.setVisible(true);
+                }
+                
+
+                case STAFF -> {
+                    StaffDashboard staffDash = new StaffDashboard(user);
+                    staffDash.setLocationRelativeTo(null);
+                    staffDash.setVisible(true);
+                }
             }
 
             // Close login form

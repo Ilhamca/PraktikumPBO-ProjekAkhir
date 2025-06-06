@@ -16,7 +16,7 @@ public class ProjekAkhir {
     public static void main(String[] args) {
         // Run GUI on the Event Dispatch Thread (EDT)
         javax.swing.SwingUtilities.invokeLater(() -> {
-            new View.LoginForm().setVisible(true);
+            new View.Login.LoginForm().setVisible(true);
         });
     }
 
