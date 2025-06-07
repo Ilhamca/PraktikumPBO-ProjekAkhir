@@ -311,14 +311,12 @@
                               <EmptySpace pref="84" max="32767" attributes="0"/>
                               <Component id="clearButton1" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="nameField1" alignment="0" pref="229" max="32767" attributes="0"/>
-                              <Component id="phoneField1" alignment="0" max="32767" attributes="0"/>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="nameField5" max="32767" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="addButton4" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                          <Component id="nameField1" alignment="0" pref="229" max="32767" attributes="0"/>
+                          <Component id="phoneField1" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="nameField5" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="addButton4" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="29" pref="90" max="32767" attributes="0"/>

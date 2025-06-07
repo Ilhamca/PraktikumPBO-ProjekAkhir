@@ -10,7 +10,9 @@ import Controller.ControllerQueue;
 import Model.Patients.ModelPatients;
 import Model.Users.ModelUsers;
 import java.util.Date;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 /**
@@ -49,27 +51,27 @@ public class StaffDashboard extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         dobDateChooser = new com.toedter.calendar.JDateChooser();
         addButton = new javax.swing.JButton();
-        clearButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         nameSearchField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         idInputField = new javax.swing.JTextField();
-        addButton4 = new javax.swing.JButton();
+        refreshAddButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         idQueueField = new javax.swing.JTextField();
-        callButton = new javax.swing.JButton();
-        removeButton = new javax.swing.JButton();
+        queueCallButton = new javax.swing.JButton();
+        queueSearchButton = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        removeButton1 = new javax.swing.JButton();
+        queueButton = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
-        nameSearchField1 = new javax.swing.JTextField();
-        callButton1 = new javax.swing.JButton();
-        callButton2 = new javax.swing.JButton();
+        nameQueueField = new javax.swing.JTextField();
+        queueDoneButton = new javax.swing.JButton();
+        queueSkipButton = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -109,10 +111,10 @@ public class StaffDashboard extends javax.swing.JFrame {
             }
         });
 
-        clearButton.setText("Remove");
-        clearButton.addActionListener(new java.awt.event.ActionListener() {
+        deleteButton.setText("Delete");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clearButtonActionPerformed(evt);
+                deleteButtonActionPerformed(evt);
             }
         });
 
@@ -143,10 +145,10 @@ public class StaffDashboard extends javax.swing.JFrame {
             }
         });
 
-        addButton4.setText("⟳");
-        addButton4.addActionListener(new java.awt.event.ActionListener() {
+        refreshAddButton.setText("⟳");
+        refreshAddButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addButton4ActionPerformed(evt);
+                refreshAddButtonActionPerformed(evt);
             }
         });
 
@@ -174,14 +176,14 @@ public class StaffDashboard extends javax.swing.JFrame {
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(addButton)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(clearButton))
+                                        .addComponent(deleteButton))
                                     .addComponent(nameInputField, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(phoneInputField, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(dobDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                         .addComponent(idInputField, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(addButton4))
+                                        .addComponent(refreshAddButton))
                                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))))
                         .addGap(63, 63, 63))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -208,7 +210,7 @@ public class StaffDashboard extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(idInputField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(addButton4))
+                    .addComponent(refreshAddButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nameInputField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -223,7 +225,7 @@ public class StaffDashboard extends javax.swing.JFrame {
                     .addComponent(dobDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(clearButton)
+                    .addComponent(deleteButton)
                     .addComponent(addButton))
                 .addGap(141, 141, 141))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,48 +247,48 @@ public class StaffDashboard extends javax.swing.JFrame {
             }
         });
 
-        callButton.setText("Call");
-        callButton.addActionListener(new java.awt.event.ActionListener() {
+        queueCallButton.setText("Call");
+        queueCallButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                callButtonActionPerformed(evt);
+                queueCallButtonActionPerformed(evt);
             }
         });
 
-        removeButton.setText("Search");
-        removeButton.addActionListener(new java.awt.event.ActionListener() {
+        queueSearchButton.setText("Search");
+        queueSearchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeButtonActionPerformed(evt);
+                queueSearchButtonActionPerformed(evt);
             }
         });
 
         jLabel10.setText("ADD QUEUE");
 
-        removeButton1.setText("Queue");
-        removeButton1.addActionListener(new java.awt.event.ActionListener() {
+        queueButton.setText("Queue");
+        queueButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeButton1ActionPerformed(evt);
+                queueButtonActionPerformed(evt);
             }
         });
 
         jLabel15.setText("Name:");
 
-        nameSearchField1.addActionListener(new java.awt.event.ActionListener() {
+        nameQueueField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameSearchField1ActionPerformed(evt);
+                nameQueueFieldActionPerformed(evt);
             }
         });
 
-        callButton1.setText("Done");
-        callButton1.addActionListener(new java.awt.event.ActionListener() {
+        queueDoneButton.setText("Done");
+        queueDoneButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                callButton1ActionPerformed(evt);
+                queueDoneButtonActionPerformed(evt);
             }
         });
 
-        callButton2.setText("Skip");
-        callButton2.addActionListener(new java.awt.event.ActionListener() {
+        queueSkipButton.setText("Skip");
+        queueSkipButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                callButton2ActionPerformed(evt);
+                queueSkipButtonActionPerformed(evt);
             }
         });
 
@@ -310,17 +312,17 @@ public class StaffDashboard extends javax.swing.JFrame {
                             .addComponent(jLabel15))
                         .addGap(61, 61, 61)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(callButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(queueCallButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(jPanel4Layout.createSequentialGroup()
-                                    .addComponent(removeButton)
+                                    .addComponent(queueSearchButton)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(removeButton1))
+                                    .addComponent(queueButton))
                                 .addComponent(idQueueField)
-                                .addComponent(nameSearchField1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(nameQueueField, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(55, 55, 55))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(callButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(queueDoneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(100, 100, 100))))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(130, 130, 130)
@@ -336,7 +338,7 @@ public class StaffDashboard extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
                     .addGap(109, 109, 109)
-                    .addComponent(callButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(queueSkipButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(274, Short.MAX_VALUE)))
         );
         jPanel4Layout.setVerticalGroup(
@@ -344,7 +346,7 @@ public class StaffDashboard extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(98, 98, 98)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nameSearchField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nameQueueField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel15))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -352,18 +354,18 @@ public class StaffDashboard extends javax.swing.JFrame {
                     .addComponent(jLabel9))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(removeButton)
-                    .addComponent(removeButton1))
+                    .addComponent(queueSearchButton)
+                    .addComponent(queueButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addGap(37, 37, 37)
-                .addComponent(callButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(queueCallButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(96, 96, 96)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(jLabel14))
                 .addGap(29, 29, 29)
-                .addComponent(callButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(queueDoneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41))
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
@@ -373,7 +375,7 @@ public class StaffDashboard extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                     .addContainerGap(603, Short.MAX_VALUE)
-                    .addComponent(callButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(queueSkipButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(43, 43, 43)))
         );
 
@@ -411,6 +413,11 @@ public class StaffDashboard extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(table);
 
         jMenu3.setText("Setting");
@@ -452,31 +459,166 @@ public class StaffDashboard extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_logoutMenuItemActionPerformed
 
+    public int getIdInput() {
+        try {
+            return Integer.parseInt(idInputField.getText());
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+
+    /**
+     * Gets the text from the Name input field in the Patients tab.
+     * @return The patient's name as a String.
+     */
     public String getNameInput() {
         return nameInputField.getText();
     }
 
+    /**
+     * Gets the text from the Phone input field.
+     * @return The patient's phone number as a String.
+     */
     public String getPhoneInput() {
         return phoneInputField.getText();
     }
 
+    /**
+     * Gets the selected date from the Date of Birth chooser.
+     * @return The selected date as a java.til.Date object.
+     */
     public Date getDobInput() {
         return dobDateChooser.getDate();
     }
 
+    /**
+     * Gets the text from the patient search field.
+     * @return The name to search for as a String.
+     */
     public String getNameSearch() {
         return nameSearchField.getText();
     }
 
-    public int getIdQueue() {
-        return Integer.parseInt(idQueueField.getText());
+    /**
+     * Gets the text from the ID input field in the Queue tab.
+     * @return The ID as an integer. Returns 0 if invalid.
+     */
+    public int getIdQueueInput() {
+        try {
+            return Integer.parseInt(idQueueField.getText());
+        } catch (NumberFormatException e) {
+            return 0;
+        }
     }
 
-    public int getIdInput() {
-        return Integer.parseInt(idInputField.getText());
+    /**
+     * Gets the text from the name search field in the Queue tab.
+     * @return The name to search for as a String.
+     */
+    public String getNameQueueInput() {
+        return nameQueueField.getText();
     }
 
-    public void ClearFields() {
+    //==========================================================================
+    // SETTERS FOR INPUT VALUES (to populate the form with data)
+    //==========================================================================
+
+    /**
+     * Sets the text for the main ID input field.
+     * @param id The integer ID to display.
+     */
+    public void setIdInput(int id) {
+        idInputField.setText(String.valueOf(id));
+    }
+
+    /**
+     * Sets the text for the Name input field.
+     * @param name The String name to display.
+     */
+    public void setNameInput(String name) {
+        nameInputField.setText(name);
+    }
+
+    /**
+     * Sets the text for the Phone input field.
+     * @param phone The String phone number to display.
+     */
+    public void setPhoneInput(String phone) {
+        phoneInputField.setText(phone);
+    }
+
+    /**
+     * Sets the selected date for the Date of Birth chooser.
+     * @param date The java.util.Date to display.
+     */
+    public void setDobInput(Date date) {
+        dobDateChooser.setDate(date);
+    }
+
+    /**
+     * Sets the text for the Currently Calling ID label in the Queue tab.
+     * @param id The integer ID to display. Use 0 or less to show "-".
+     */
+    public void setCurrentlyCallingId(int id) {
+        if (id > 0) {
+            jLabel14.setText(String.valueOf(id));
+        } else {
+            jLabel14.setText("-");
+        }
+    }
+
+    //==========================================================================
+    // GETTERS FOR UI COMPONENTS (to access the components themselves)
+    //==========================================================================
+
+    public JTable getTable() {
+        return table;
+    }
+
+    // --- Patients Tab Buttons ---
+    public JButton getAddButton() {
+        return addButton;
+    }
+
+    public JButton getDeleteButton() {
+        return deleteButton;
+    }
+
+    public JButton getSearchButton() {
+        return searchButton;
+    }
+
+    public JButton getRefreshButton() {
+        return refreshAddButton;
+    }
+
+    // --- Queue Tab Buttons ---
+    public JButton getQueueSearchButton() {
+        return queueSearchButton;
+    }
+
+    public JButton getQueueButton() {
+        return queueButton;
+    }
+
+    public JButton getQueueCallButton() {
+        return queueCallButton;
+    }
+
+    public JButton getQueueDoneButton() {
+        return queueDoneButton;
+    }
+
+    public JButton getQueueSkipButton() {
+        return queueSkipButton;
+    }
+
+    public com.toedter.calendar.JDateChooser getDobDateChooser() {
+        return dobDateChooser;
+    }
+
+    public void clearAddFields() {
+        idInputField.setText("0");
         nameInputField.setText("");
         phoneInputField.setText("");
         dobDateChooser.setDate(null);
@@ -529,21 +671,21 @@ public class StaffDashboard extends javax.swing.JFrame {
         refreshTable();
     }//GEN-LAST:event_addButtonActionPerformed
 
-    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_clearButtonActionPerformed
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void idQueueFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idQueueFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_idQueueFieldActionPerformed
 
-    private void callButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_callButtonActionPerformed
+    private void queueCallButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_queueCallButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_callButtonActionPerformed
+    }//GEN-LAST:event_queueCallButtonActionPerformed
 
-    private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
+    private void queueSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_queueSearchButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_removeButtonActionPerformed
+    }//GEN-LAST:event_queueSearchButtonActionPerformed
 
     private void nameSearchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameSearchFieldActionPerformed
         // TODO add your handling code here:
@@ -561,25 +703,53 @@ public class StaffDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_idInputFieldActionPerformed
 
-    private void removeButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButton1ActionPerformed
+    private void queueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_queueButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_removeButton1ActionPerformed
+    }//GEN-LAST:event_queueButtonActionPerformed
 
-    private void nameSearchField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameSearchField1ActionPerformed
+    private void nameQueueFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameQueueFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_nameSearchField1ActionPerformed
+    }//GEN-LAST:event_nameQueueFieldActionPerformed
 
-    private void addButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addButton4ActionPerformed
+    private void refreshAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshAddButtonActionPerformed
+        clearAddFields();
+        table.clearSelection();
+    }//GEN-LAST:event_refreshAddButtonActionPerformed
 
-    private void callButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_callButton1ActionPerformed
+    private void queueDoneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_queueDoneButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_callButton1ActionPerformed
+    }//GEN-LAST:event_queueDoneButtonActionPerformed
 
-    private void callButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_callButton2ActionPerformed
+    private void queueSkipButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_queueSkipButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_callButton2ActionPerformed
+    }//GEN-LAST:event_queueSkipButtonActionPerformed
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+
+        // Get the index of the selected row
+        int selectedRow = table.getSelectedRow();
+
+        // Ensure a row is actually selected to prevent errors
+        if (selectedRow != -1) {
+            try {
+                // Get the data from the selected row, converting it to the correct type
+                Integer id = (Integer) table.getValueAt(selectedRow, 0);
+                String name = (String) table.getValueAt(selectedRow, 1);
+                String phone = (String) table.getValueAt(selectedRow, 2);
+                Date dob = (Date) table.getValueAt(selectedRow, 3);
+
+                // Call the correct setter methods to populate the input fields
+                this.setIdInput(id);
+                this.setNameInput(name);
+                this.setPhoneInput(phone);
+                this.setDobInput(dob);
+
+            } catch (Exception e) {
+                // Display an error message if the data in the table is not in the expected format
+                JOptionPane.showMessageDialog(this, "Error reading data from table: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_tableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -626,11 +796,7 @@ public class StaffDashboard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
-    private javax.swing.JButton addButton4;
-    private javax.swing.JButton callButton;
-    private javax.swing.JButton callButton1;
-    private javax.swing.JButton callButton2;
-    private javax.swing.JButton clearButton;
+    private javax.swing.JButton deleteButton;
     private com.toedter.calendar.JDateChooser dobDateChooser;
     private javax.swing.JTextField idInputField;
     private javax.swing.JTextField idQueueField;
@@ -655,11 +821,15 @@ public class StaffDashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenuItem logoutMenuItem;
     private javax.swing.JTextField nameInputField;
+    private javax.swing.JTextField nameQueueField;
     private javax.swing.JTextField nameSearchField;
-    private javax.swing.JTextField nameSearchField1;
     private javax.swing.JTextField phoneInputField;
-    private javax.swing.JButton removeButton;
-    private javax.swing.JButton removeButton1;
+    private javax.swing.JButton queueButton;
+    private javax.swing.JButton queueCallButton;
+    private javax.swing.JButton queueDoneButton;
+    private javax.swing.JButton queueSearchButton;
+    private javax.swing.JButton queueSkipButton;
+    private javax.swing.JButton refreshAddButton;
     private javax.swing.JButton searchButton;
     private javax.swing.JTabbedPane tabbedPane;
     private javax.swing.JTable table;

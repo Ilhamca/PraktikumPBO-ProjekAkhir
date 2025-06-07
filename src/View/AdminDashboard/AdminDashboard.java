@@ -189,10 +189,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_addUserMenuItemActionPerformed
 
     private void addPatientsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPatientsMenuItemActionPerformed
-        addPatients addPatientsPanel = new addPatients();
-        setContentPane(addPatientsPanel);
-        revalidate();
-        repaint();
+
     }//GEN-LAST:event_addPatientsMenuItemActionPerformed
 
     /**

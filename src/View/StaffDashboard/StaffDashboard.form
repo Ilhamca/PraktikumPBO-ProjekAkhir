@@ -105,7 +105,7 @@
                                           <Group type="102" attributes="0">
                                               <Component id="addButton" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="clearButton" min="-2" max="-2" attributes="0"/>
+                                              <Component id="deleteButton" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <Component id="nameInputField" alignment="0" max="32767" attributes="0"/>
                                           <Component id="phoneInputField" alignment="0" max="32767" attributes="0"/>
@@ -113,7 +113,7 @@
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="idInputField" min="-2" pref="197" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="addButton4" min="-2" max="-2" attributes="0"/>
+                                              <Component id="refreshAddButton" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
@@ -152,7 +152,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="idInputField" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="addButton4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="refreshAddButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -171,7 +171,7 @@
                       </Group>
                       <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="clearButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="deleteButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="addButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="141" max="-2" attributes="0"/>
@@ -224,12 +224,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addButtonActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="clearButton">
+            <Component class="javax.swing.JButton" name="deleteButton">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Remove"/>
+                <Property name="text" type="java.lang.String" value="Delete"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clearButtonActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteButtonActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel12">
@@ -269,12 +269,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="idInputFieldActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="addButton4">
+            <Component class="javax.swing.JButton" name="refreshAddButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="&#x27f3;"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addButton4ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="refreshAddButtonActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
@@ -334,21 +334,21 @@
                                   </Group>
                                   <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="callButton" min="-2" pref="96" max="-2" attributes="0"/>
+                                      <Component id="queueCallButton" min="-2" pref="96" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="removeButton" min="-2" max="-2" attributes="0"/>
+                                              <Component id="queueSearchButton" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="removeButton1" min="-2" max="-2" attributes="0"/>
+                                              <Component id="queueButton" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <Component id="idQueueField" max="32767" attributes="0"/>
-                                          <Component id="nameSearchField1" min="-2" pref="229" max="-2" attributes="0"/>
+                                          <Component id="nameQueueField" min="-2" pref="229" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="callButton1" min="-2" pref="96" max="-2" attributes="0"/>
+                                  <Component id="queueDoneButton" min="-2" pref="96" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -370,7 +370,7 @@
                       <Group type="103" rootIndex="2" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="109" max="-2" attributes="0"/>
-                              <Component id="callButton2" min="-2" pref="96" max="-2" attributes="0"/>
+                              <Component id="queueSkipButton" min="-2" pref="96" max="-2" attributes="0"/>
                               <EmptySpace pref="274" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -381,7 +381,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="98" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="nameSearchField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="nameQueueField" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -391,20 +391,20 @@
                           </Group>
                           <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="removeButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="removeButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="queueSearchButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="queueButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="154" max="32767" attributes="0"/>
                           <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                          <Component id="callButton" min="-2" pref="61" max="-2" attributes="0"/>
+                          <Component id="queueCallButton" min="-2" pref="61" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="96" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                          <Component id="callButton1" min="-2" pref="61" max="-2" attributes="0"/>
+                          <Component id="queueDoneButton" min="-2" pref="61" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
@@ -417,7 +417,7 @@
                       <Group type="103" rootIndex="2" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace pref="603" max="32767" attributes="0"/>
-                              <Component id="callButton2" min="-2" pref="61" max="-2" attributes="0"/>
+                              <Component id="queueSkipButton" min="-2" pref="61" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -440,20 +440,20 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="idQueueFieldActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="callButton">
+                <Component class="javax.swing.JButton" name="queueCallButton">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Call"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="callButtonActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="queueCallButtonActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="removeButton">
+                <Component class="javax.swing.JButton" name="queueSearchButton">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Search"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeButtonActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="queueSearchButtonActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel10">
@@ -461,12 +461,12 @@
                     <Property name="text" type="java.lang.String" value="ADD QUEUE"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="removeButton1">
+                <Component class="javax.swing.JButton" name="queueButton">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Queue"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeButton1ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="queueButtonActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel15">
@@ -474,25 +474,25 @@
                     <Property name="text" type="java.lang.String" value="Name:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="nameSearchField1">
+                <Component class="javax.swing.JTextField" name="nameQueueField">
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nameSearchField1ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nameQueueFieldActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="callButton1">
+                <Component class="javax.swing.JButton" name="queueDoneButton">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Done"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="callButton1ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="queueDoneButtonActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="callButton2">
+                <Component class="javax.swing.JButton" name="queueSkipButton">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Skip"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="callButton2ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="queueSkipButtonActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel11">
@@ -556,6 +556,9 @@
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tableMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

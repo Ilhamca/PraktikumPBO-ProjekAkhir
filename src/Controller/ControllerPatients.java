@@ -31,7 +31,7 @@ public class ControllerPatients {
     public void insert(StaffDashboard staffDash, ModelPatients patient) {
         dao.insert(patient);
         JOptionPane.showMessageDialog(staffDash, "Patient added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-        staffDash.ClearFields();
+        staffDash.clearAddFields();
         staffDash.refreshTable();
         
     }
