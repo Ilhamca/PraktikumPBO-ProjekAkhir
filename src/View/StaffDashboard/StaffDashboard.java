@@ -5,12 +5,13 @@
 package View.StaffDashboard;
 
 import View.Login.LoginForm;
-import View.AdminDashboard.*;
 import Controller.ControllerPatients;
 import Controller.ControllerQueue;
-import Controller.ControllerUsers;
+import Model.Patients.ModelPatients;
 import Model.Users.ModelUsers;
-import javax.swing.table.TableModel;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 
 /**
  *
@@ -20,10 +21,13 @@ public class StaffDashboard extends javax.swing.JFrame {
 
     /**
      * Creates new form Dashboard
+     *
+     * @param user
      */
     public StaffDashboard(ModelUsers user) {
         initComponents();
         table.setModel(ControllerPatients.getTableModel());
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
     /**
@@ -39,28 +43,35 @@ public class StaffDashboard extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        nameField = new javax.swing.JTextField();
+        nameInputField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        phoneField = new javax.swing.JTextField();
+        phoneInputField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        dobDateChooser = new com.toedter.calendar.JDateChooser();
         addButton = new javax.swing.JButton();
         clearButton = new javax.swing.JButton();
-        jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        nameField3 = new javax.swing.JTextField();
-        copyIdButton = new javax.swing.JButton();
+        nameSearchField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        idInputField = new javax.swing.JTextField();
+        addButton4 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        nameField2 = new javax.swing.JTextField();
+        idQueueField = new javax.swing.JTextField();
         callButton = new javax.swing.JButton();
         removeButton = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
+        removeButton1 = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
+        nameSearchField1 = new javax.swing.JTextField();
+        callButton1 = new javax.swing.JButton();
+        callButton2 = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -77,13 +88,13 @@ public class StaffDashboard extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Add/Edit Patient");
+        jLabel1.setText("Add/Edit/Remove Patient");
 
         jLabel2.setText("Name:");
 
-        nameField.addActionListener(new java.awt.event.ActionListener() {
+        nameInputField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameFieldActionPerformed(evt);
+                nameInputFieldActionPerformed(evt);
             }
         });
 
@@ -98,27 +109,18 @@ public class StaffDashboard extends javax.swing.JFrame {
             }
         });
 
-        clearButton.setText("Clear");
+        clearButton.setText("Remove");
         clearButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 clearButtonActionPerformed(evt);
             }
         });
 
-        jLabel11.setText("ID: ");
-
         jLabel12.setText("Name:");
 
-        nameField3.addActionListener(new java.awt.event.ActionListener() {
+        nameSearchField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameField3ActionPerformed(evt);
-            }
-        });
-
-        copyIdButton.setText("CopyID");
-        copyIdButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                copyIdButtonActionPerformed(evt);
+                nameSearchFieldActionPerformed(evt);
             }
         });
 
@@ -131,50 +133,60 @@ public class StaffDashboard extends javax.swing.JFrame {
 
         jLabel13.setText("Search Patient");
 
-        jLabel14.setText("-");
+        jLabel5.setText("ID:");
+
+        idInputField.setEditable(false);
+        idInputField.setText("0");
+        idInputField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idInputFieldActionPerformed(evt);
+            }
+        });
+
+        addButton4.setText("⟳");
+        addButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(120, 120, 120)
-                .addComponent(addButton)
-                .addGap(99, 99, 99)
-                .addComponent(clearButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(76, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addGap(77, 77, 77)
+                                .addComponent(nameSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel4)
-                                    .addComponent(jLabel3))
-                                .addGap(27, 27, 27)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(nameField)
-                                    .addComponent(phoneField)
-                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel12)
-                                    .addComponent(jLabel11))
-                                .addGap(77, 77, 77)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(nameField3, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
-                                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel5))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(addButton)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(clearButton))
+                                    .addComponent(nameInputField, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(phoneInputField, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(dobDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                        .addComponent(idInputField, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(addButton4))
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))))
                         .addGap(63, 63, 63))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(187, 187, 187))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(searchButton)
-                        .addGap(101, 101, 101)
-                        .addComponent(copyIdButton)
-                        .addGap(110, 110, 110))))
+                        .addGap(187, 187, 187))))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                     .addContainerGap(217, Short.MAX_VALUE)
@@ -186,35 +198,34 @@ public class StaffDashboard extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(91, 91, 91)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nameField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nameSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12))
-                .addGap(31, 31, 31)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel14))
+                .addGap(38, 38, 38)
+                .addComponent(searchButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 177, Short.MAX_VALUE)
+                .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(copyIdButton)
-                    .addComponent(searchButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(52, 52, 52)
+                    .addComponent(idInputField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(addButton4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nameInputField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(phoneField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(phoneInputField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(122, 122, 122)
+                    .addComponent(dobDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addButton)
-                    .addComponent(clearButton))
-                .addGap(55, 55, 55))
+                    .addComponent(clearButton)
+                    .addComponent(addButton))
+                .addGap(141, 141, 141))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addGap(47, 47, 47)
@@ -224,13 +235,13 @@ public class StaffDashboard extends javax.swing.JFrame {
 
         tabbedPane.addTab("Patients", jPanel2);
 
-        jLabel8.setText("CALL OLDEST NUMBERING");
+        jLabel8.setText("CALL QUEUE");
 
         jLabel9.setText("ID:");
 
-        nameField2.addActionListener(new java.awt.event.ActionListener() {
+        idQueueField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameField2ActionPerformed(evt);
+                idQueueFieldActionPerformed(evt);
             }
         });
 
@@ -241,7 +252,7 @@ public class StaffDashboard extends javax.swing.JFrame {
             }
         });
 
-        removeButton.setText("Queue");
+        removeButton.setText("Search");
         removeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeButtonActionPerformed(evt);
@@ -250,53 +261,120 @@ public class StaffDashboard extends javax.swing.JFrame {
 
         jLabel10.setText("ADD QUEUE");
 
+        removeButton1.setText("Queue");
+        removeButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setText("Name:");
+
+        nameSearchField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameSearchField1ActionPerformed(evt);
+            }
+        });
+
+        callButton1.setText("Done");
+        callButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                callButton1ActionPerformed(evt);
+            }
+        });
+
+        callButton2.setText("Skip");
+        callButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                callButton2ActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setText("Currently Taking ID:");
+
+        jLabel14.setText("-");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(76, Short.MAX_VALUE)
-                .addComponent(jLabel9)
-                .addGap(82, 82, 82)
-                .addComponent(nameField2, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 78, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel8)
-                .addGap(159, 159, 159))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(callButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(189, 189, 189))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(removeButton)
-                .addGap(195, 195, 195))
+                .addContainerGap(99, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(199, 199, 199))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel15))
+                        .addGap(61, 61, 61)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(callButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel4Layout.createSequentialGroup()
+                                    .addComponent(removeButton)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(removeButton1))
+                                .addComponent(idQueueField)
+                                .addComponent(nameSearchField1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(55, 55, 55))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(callButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(100, 100, 100))))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(130, 130, 130)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel14)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                     .addContainerGap(221, Short.MAX_VALUE)
                     .addComponent(jLabel10)
                     .addGap(188, 188, 188)))
+            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addGap(109, 109, 109)
+                    .addComponent(callButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(274, Short.MAX_VALUE)))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(90, 90, 90)
+                .addGap(98, 98, 98)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nameField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nameSearchField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(idQueueField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
-                .addGap(83, 83, 83)
-                .addComponent(removeButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 348, Short.MAX_VALUE)
+                .addGap(25, 25, 25)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(removeButton)
+                    .addComponent(removeButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
                 .addComponent(jLabel8)
-                .addGap(18, 18, 18)
+                .addGap(37, 37, 37)
                 .addComponent(callButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
+                .addGap(96, 96, 96)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel14))
+                .addGap(29, 29, 29)
+                .addComponent(callButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41))
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
                     .addGap(49, 49, 49)
                     .addComponent(jLabel10)
                     .addContainerGap(642, Short.MAX_VALUE)))
+            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                    .addContainerGap(603, Short.MAX_VALUE)
+                    .addComponent(callButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(43, 43, 43)))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -308,7 +386,7 @@ public class StaffDashboard extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGap(0, 1, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -374,49 +452,39 @@ public class StaffDashboard extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_logoutMenuItemActionPerformed
 
-    private void nameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameFieldActionPerformed
+    public String getNameInput() {
+        return nameInputField.getText();
+    }
 
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addButtonActionPerformed
+    public String getPhoneInput() {
+        return phoneInputField.getText();
+    }
 
-    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_clearButtonActionPerformed
+    public Date getDobInput() {
+        return dobDateChooser.getDate();
+    }
 
-    private void nameField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameField2ActionPerformed
+    public String getNameSearch() {
+        return nameSearchField.getText();
+    }
 
-    private void callButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_callButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_callButtonActionPerformed
+    public int getIdQueue() {
+        return Integer.parseInt(idQueueField.getText());
+    }
 
-    private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_removeButtonActionPerformed
+    public int getIdInput() {
+        return Integer.parseInt(idInputField.getText());
+    }
 
-    private void nameField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameField3ActionPerformed
+    public void ClearFields() {
+        nameInputField.setText("");
+        phoneInputField.setText("");
+        dobDateChooser.setDate(null);
+    }
 
-    private void copyIdButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyIdButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_copyIdButtonActionPerformed
-
-    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchButtonActionPerformed
-
-    private void tabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabbedPaneStateChanged
-        // This code runs every time a tab is switched
+    public void refreshTable() {
         int selectedIndex = tabbedPane.getSelectedIndex();
         String selectedTitle = tabbedPane.getTitleAt(selectedIndex);
-
-        System.out.println("Switched to tab: " + selectedIndex + " (" + selectedTitle + ")");
-        // Check if the "User Management" tab is now selected AND data hasn't been loaded yet
         if (selectedTitle.equals("Patients")) {
             System.out.println("Loading user data now...");
             table.setModel(ControllerPatients.getTableModel());
@@ -427,7 +495,91 @@ public class StaffDashboard extends javax.swing.JFrame {
             table.setModel(ControllerQueue.getTableModel());
             table.getTableHeader().setReorderingAllowed(false);
         }
+    }
+
+    private void nameInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameInputFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameInputFieldActionPerformed
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        try {
+            ControllerPatients controller = new ControllerPatients();
+            int id = this.getIdInput();
+            String name = this.getNameInput();
+            String phone = this.getPhoneInput();
+            Date dob = this.getDobInput();
+
+            if (name.trim().isEmpty() || phone.trim().isEmpty() || dob == null) {
+                JOptionPane.showMessageDialog(this, "All field must be filled!", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return; // Stop the process if validation fails
+            }
+
+            ModelPatients patientData = new ModelPatients(id, name, phone, dob);
+
+            if (id == 0) {
+                controller.insert(this, patientData);
+            } else {
+                controller.update(this, patientData);
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid ID Format.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        }
+        ClearFields();
+        refreshTable();
+    }//GEN-LAST:event_addButtonActionPerformed
+
+    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_clearButtonActionPerformed
+
+    private void idQueueFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idQueueFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idQueueFieldActionPerformed
+
+    private void callButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_callButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_callButtonActionPerformed
+
+    private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_removeButtonActionPerformed
+
+    private void nameSearchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameSearchFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameSearchFieldActionPerformed
+
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchButtonActionPerformed
+
+    private void tabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabbedPaneStateChanged
+        refreshTable();
     }//GEN-LAST:event_tabbedPaneStateChanged
+
+    private void idInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idInputFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idInputFieldActionPerformed
+
+    private void removeButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_removeButton1ActionPerformed
+
+    private void nameSearchField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameSearchField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameSearchField1ActionPerformed
+
+    private void addButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addButton4ActionPerformed
+
+    private void callButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_callButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_callButton1ActionPerformed
+
+    private void callButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_callButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_callButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -467,26 +619,32 @@ public class StaffDashboard extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 ModelUsers user = null;
-                new StaffDashboard(user).setVisible(true);
+                StaffDashboard dashboard = new StaffDashboard(user);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
+    private javax.swing.JButton addButton4;
     private javax.swing.JButton callButton;
+    private javax.swing.JButton callButton1;
+    private javax.swing.JButton callButton2;
     private javax.swing.JButton clearButton;
-    private javax.swing.JButton copyIdButton;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser dobDateChooser;
+    private javax.swing.JTextField idInputField;
+    private javax.swing.JTextField idQueueField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu3;
@@ -496,11 +654,12 @@ public class StaffDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenuItem logoutMenuItem;
-    private javax.swing.JTextField nameField;
-    private javax.swing.JTextField nameField2;
-    private javax.swing.JTextField nameField3;
-    private javax.swing.JTextField phoneField;
+    private javax.swing.JTextField nameInputField;
+    private javax.swing.JTextField nameSearchField;
+    private javax.swing.JTextField nameSearchField1;
+    private javax.swing.JTextField phoneInputField;
     private javax.swing.JButton removeButton;
+    private javax.swing.JButton removeButton1;
     private javax.swing.JButton searchButton;
     private javax.swing.JTabbedPane tabbedPane;
     private javax.swing.JTable table;

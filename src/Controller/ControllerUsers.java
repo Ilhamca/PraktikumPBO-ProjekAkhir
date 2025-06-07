@@ -5,7 +5,7 @@ package Controller;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 import View.StaffDashboard.StaffDashboard;
-import View.AdminDashboard.AdminDashboard;
+import View.AdminDashboard.Dashboard;
 import DAO.Users.DAOUsers;
 import Model.Users.ModelUsers;
 import Model.Users.TableUsers;
@@ -62,7 +62,7 @@ public class ControllerUsers {
             // Open role-based dashboard
             switch (user.getRole()) {
                 case ADMIN -> {
-                    AdminDashboard adminDash = new AdminDashboard(user);
+                    Dashboard adminDash = new Dashboard(user);
                     adminDash.setLocationRelativeTo(null);
                     adminDash.setVisible(true);
                 }

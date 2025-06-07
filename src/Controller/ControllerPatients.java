@@ -5,16 +5,15 @@
 package Controller;
 
 import DAO.Patients.DAOPatients;
-import Model.Connector;
 import Model.Patients.*;
 import Model.Patients.ModelPatients;
+import View.StaffDashboard.StaffDashboard;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Component;
 import java.time.LocalDate;
 import javax.swing.table.TableModel;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
@@ -23,19 +22,21 @@ import javax.swing.JTextField;
  */
 public class ControllerPatients {
 
-    private static Component panel;
-
     private DAOPatients dao;
 
     public ControllerPatients() {
-        dao = new DAOPatients();
+        this.dao = new DAOPatients();
     }
 
-    public void insert(ModelPatients patient) {
+    public void insert(StaffDashboard staffDash, ModelPatients patient) {
         dao.insert(patient);
+        JOptionPane.showMessageDialog(staffDash, "Patient added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        staffDash.ClearFields();
+        staffDash.refreshTable();
+        
     }
 
-    public void update(ModelPatients patient) {
+    public void update(StaffDashboard staffDash, ModelPatients patient) {
         dao.update(patient);
     }
 
@@ -57,26 +58,26 @@ public class ControllerPatients {
         return new TablePatients(patients);
     }
 
-    public static void handleAddPatient(JTextField nameField, JTextField phoneField, JDateChooser dateChooser) {
-        String name = nameField.getText();
-        String phone = phoneField.getText();
-        java.util.Date dobUtil = dateChooser.getDate();
-
-        if (name.isEmpty() || phone.isEmpty() || dobUtil == null) {
-            JOptionPane.showMessageDialog(panel, "Please fill all fields!", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // Convert java.util.Date to LocalDate
-        LocalDate dob = dobUtil.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
-        ModelPatients patient = new ModelPatients(0, name, phone, dob);
-
-        try {
-            DAOPatients dao = new DAOPatients();
-            dao.insert(patient);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(panel, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+//    public static void handleAddPatient(JTextField nameField, JTextField phoneField, JDateChooser dateChooser) {
+//        String name = nameField.getText();
+//        String phone = phoneField.getText();
+//        java.util.Date dobUtil = dateChooser.getDate();
+//
+//        if (name.isEmpty() || phone.isEmpty() || dobUtil == null) {
+//            JOptionPane.showMessageDialog(panel, "Please fill all fields!", "Input Error", JOptionPane.ERROR_MESSAGE);
+//            return;
+//        }
+//
+//        // Convert java.util.Date to LocalDate
+//        LocalDate dob = dobUtil.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+//        ModelPatients patient = new ModelPatients(0, name, phone, dob);
+//
+//        try {
+//            DAOPatients dao = new DAOPatients();
+//            dao.insert(patient);
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(panel, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+//        }
+//    }
 
 }

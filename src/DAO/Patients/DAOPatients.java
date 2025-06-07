@@ -7,9 +7,9 @@ package DAO.Patients;
 import DAO.InterfaceDAO;
 import Model.Connector;
 import Model.Patients.ModelPatients;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -28,7 +28,10 @@ public class DAOPatients implements InterfaceDAO<ModelPatients> {
             statement = Connector.Connect().prepareStatement(query);
             statement.setString(1, obj.getName());
             statement.setString(2, obj.getPhone());
-            statement.setDate(3, java.sql.Date.valueOf(obj.getDateOfBirth()));
+            
+            java.util.Date utilDob = obj.getDateOfBirth();
+            java.sql.Date sqlDob = new java.sql.Date(utilDob.getTime());
+            statement.setDate(3, sqlDob);
 
             statement.executeUpdate();
             System.out.println("Successfully inserted into patients");
@@ -47,7 +50,7 @@ public class DAOPatients implements InterfaceDAO<ModelPatients> {
 
             statement.setString(1, obj.getName());
             statement.setString(2, obj.getPhone());
-            statement.setDate(3, java.sql.Date.valueOf(obj.getDateOfBirth()));
+            statement.setDate(3, (Date) obj.getDateOfBirth());
             statement.setInt(4, obj.getId());
         } catch (SQLException e) {
             System.out.println("Update Failed: " + e.getLocalizedMessage());
@@ -83,7 +86,7 @@ public class DAOPatients implements InterfaceDAO<ModelPatients> {
                         result.getInt("id"),
                         result.getString("name"),
                         result.getString("phone"),
-                        result.getDate("dob").toLocalDate()
+                        result.getDate("dob")
                 );
             }
             result.close();
@@ -107,7 +110,7 @@ public class DAOPatients implements InterfaceDAO<ModelPatients> {
                         result.getInt("id"),
                         result.getString("name"),
                         result.getString("phone"),
-                        result.getDate("dob").toLocalDate()
+                        result.getDate("dob")
                 );
                 list.add(history);
             }
