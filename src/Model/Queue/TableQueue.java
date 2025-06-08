@@ -14,7 +14,7 @@ import javax.swing.table.AbstractTableModel;
 public class TableQueue extends AbstractTableModel {
 
     private final List<ModelQueue> queueList;
-    private final String[] columnNames = {"ID", "Patient ID", "Queue Number", "Status"};
+    private final String[] columnNames = {"ID", "Patient ID", "Status", "Time"};
 
     public TableQueue(List<ModelQueue> queueList) {
         this.queueList = queueList;
@@ -41,8 +41,7 @@ public class TableQueue extends AbstractTableModel {
         return switch (columnIndex) {
             case 0 -> queue.getId();
             case 1 -> queue.getPatientId();
-            case 2 -> queue.getQueueNumber();
-            case 3 -> queue.getStatus().name();
+            case 2 -> queue.getStatus().name();
             default -> null;
         };
     }

@@ -23,13 +23,12 @@ public class DAOQueue implements InterfaceDAO<ModelQueue> {
     @Override
     public void insert(ModelQueue obj) {
         try {
-            String query = "INSERT INTO queue (patient_id, number, status, date) VALUES (?,?,?,?)";
+            String query = "INSERT INTO queue (patient_id, status, date) VALUES (?,?,?)";
             PreparedStatement statement;
             statement = Connector.Connect().prepareStatement(query);
             statement.setInt(1, obj.getPatientId());
-            statement.setInt(2, obj.getQueueNumber());
-            statement.setString(3, obj.getStatus().name());
-            statement.setTimestamp(4, Timestamp.valueOf(obj.getDate()));
+            statement.setString(2, obj.getStatus().name());
+            statement.setTimestamp(3, Timestamp.valueOf(obj.getDate()));
 
             statement.executeUpdate();
             System.out.println("Successfully inserted into queue");
@@ -43,14 +42,13 @@ public class DAOQueue implements InterfaceDAO<ModelQueue> {
     @Override
     public void update(ModelQueue obj) {
         try {
-            String query = "UPDATE queue SET patient_id = ?, number = ?, status = ?, date = ? WHERE id = ?";
+            String query = "UPDATE queue SET patient_id = ?, status = ?, date = ? WHERE id = ?";
             PreparedStatement statement = Connector.Connect().prepareStatement(query);
 
             statement.setInt(1, obj.getPatientId());
-            statement.setInt(2, obj.getQueueNumber());
-            statement.setString(3, obj.getStatus().name());
-            statement.setTimestamp(4, Timestamp.valueOf(obj.getDate()));
-            statement.setInt(5, obj.getId());
+            statement.setString(2, obj.getStatus().name());
+            statement.setTimestamp(3, Timestamp.valueOf(obj.getDate()));
+            statement.setInt(4, obj.getId());
         } catch (SQLException e) {
             System.out.println("Update Failed: " + e.getLocalizedMessage());
         }
@@ -84,7 +82,6 @@ public class DAOQueue implements InterfaceDAO<ModelQueue> {
                 history = new ModelQueue(
                         result.getInt("id"),
                         result.getInt("patient_id"),
-                        result.getInt("number"),
                         ModelQueue.Status.valueOf(result.getString("status").toUpperCase()),
                         result.getTimestamp("timestamp").toLocalDateTime()
                 );
@@ -109,7 +106,6 @@ public class DAOQueue implements InterfaceDAO<ModelQueue> {
                 ModelQueue queue = new ModelQueue(
                         result.getInt("id"),
                         result.getInt("patient_id"),
-                        result.getInt("number"),
                         ModelQueue.Status.valueOf(result.getString("status").toUpperCase()),
                         result.getTimestamp("date").toLocalDateTime()
                 );

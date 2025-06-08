@@ -8,13 +8,9 @@ import DAO.Patients.DAOPatients;
 import Model.Patients.*;
 import Model.Patients.ModelPatients;
 import View.StaffDashboard.StaffDashboard;
-import com.toedter.calendar.JDateChooser;
-import java.awt.Component;
-import java.time.LocalDate;
 import javax.swing.table.TableModel;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 /**
  *
@@ -33,17 +29,25 @@ public class ControllerPatients {
         JOptionPane.showMessageDialog(staffDash, "Patient added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
         staffDash.clearAddFields();
         staffDash.refreshTable();
-        
     }
 
     public void update(StaffDashboard staffDash, ModelPatients patient) {
         dao.update(patient);
+        JOptionPane.showMessageDialog(staffDash, "Patient updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        staffDash.clearAddFields();
+        staffDash.refreshTable();
     }
 
     public void delete(ModelPatients patient) {
         dao.delete(patient);
     }
 
+    public TableModel searchByName(String name){
+        List<ModelPatients> searchResult = dao.searchByName(name);
+        TableModel resultModel = new TablePatients(searchResult);
+        return resultModel;
+    }
+    
     public ModelPatients getById(int id) {
         return dao.getById(id);
     }
@@ -55,6 +59,8 @@ public class ControllerPatients {
     public static TableModel getTableModel() {
         DAOPatients dao = new DAOPatients();
         List<ModelPatients> patients = dao.getAll();
+        
+        System.out.println("DEBUG : Received " + patients.size() + " patients from DAO.");
         return new TablePatients(patients);
     }
 
@@ -79,5 +85,4 @@ public class ControllerPatients {
 //            JOptionPane.showMessageDialog(panel, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 //        }
 //    }
-
 }

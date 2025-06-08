@@ -8,15 +8,16 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 /**
- *
  * @author Iam
  */
-public class TablePatients extends AbstractTableModel{
+public class TablePatients extends AbstractTableModel {
+
     private final List<ModelPatients> patientList;
     private final String[] columnNames = {"ID", "Name", "Date of Birth", "Gender"};
 
     public TablePatients(List<ModelPatients> patientList) {
         this.patientList = patientList;
+        System.out.println("DEBUG : Initializing with " + this.patientList.size() + " patients. Column count is " + getColumnCount());
     }
 
     @Override
@@ -48,6 +49,23 @@ public class TablePatients extends AbstractTableModel{
                 return patient.getDateOfBirth();
             default:
                 return null;
+        }
+    }
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        // This helps the table sort and render data correctly
+        switch (columnIndex) {
+            case 0:
+                return Integer.class;
+            case 1:
+                return String.class;
+            case 2:
+                return String.class;
+            case 3:
+                return java.util.Date.class;
+            default:
+                return Object.class;
         }
     }
 }

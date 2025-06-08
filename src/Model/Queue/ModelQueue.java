@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  */
 public class ModelQueue {
 
-    private int id, patientId, queueNumber;
+    private int id, patientId;
     private Status status;
     private LocalDateTime date;
 
@@ -28,10 +28,9 @@ public class ModelQueue {
     }
 
     // Parameterized Constructor - Instantly initialize object in one line
-    public ModelQueue(int id, int patientId, int queueNumber, Status status, LocalDateTime queueDate) {
+    public ModelQueue(int id, int patientId, Status status, LocalDateTime queueDate) {
         this.id = id;
         this.patientId = patientId;
-        this.queueNumber = queueNumber;
         this.status = status;
         this.date = queueDate;
     }
@@ -51,14 +50,6 @@ public class ModelQueue {
 
     public void setPatientId(int patientId) {
         this.patientId = patientId;
-    }
-
-    public int getQueueNumber() {
-        return queueNumber;
-    }
-
-    public void setQueueNumber(int queueNumber) {
-        this.queueNumber = queueNumber;
     }
 
     public Status getStatus() {
