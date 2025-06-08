@@ -9,14 +9,22 @@ import Controller.ControllerPatients;
 import Controller.ControllerQueue;
 import Model.Patients.ModelPatients;
 import Model.Users.ModelUsers;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
- *
  * @author Iam
  */
 public class StaffDashboard extends javax.swing.JFrame {
@@ -28,8 +36,27 @@ public class StaffDashboard extends javax.swing.JFrame {
      */
     public StaffDashboard(ModelUsers user) {
         initComponents();
-        table.setModel(ControllerPatients.getTableModel());
+        System.out.println("DEBUG : About to set the table model.");
+        refreshTable();
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        //Listener to change button text
+        idInputField.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                updateButtonState();
+            }
+
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                updateButtonState();
+            }
+
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                updateButtonState();
+            }
+        });
+
+        setAlignLeftTable();
+        applyDefaultSorter();
     }
 
     /**
@@ -59,23 +86,23 @@ public class StaffDashboard extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         idInputField = new javax.swing.JTextField();
         refreshAddButton = new javax.swing.JButton();
+        resetSearchButton = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        idQueueField = new javax.swing.JTextField();
+        queueAddButton = new javax.swing.JButton();
+        refreshQueueButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        idQueueField = new javax.swing.JTextField();
         queueCallButton = new javax.swing.JButton();
-        queueSearchButton = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
-        queueButton = new javax.swing.JButton();
-        jLabel15 = new javax.swing.JLabel();
-        nameQueueField = new javax.swing.JTextField();
         queueDoneButton = new javax.swing.JButton();
         queueSkipButton = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
+        tableLable = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         logoutMenuItem = new javax.swing.JMenuItem();
@@ -152,6 +179,39 @@ public class StaffDashboard extends javax.swing.JFrame {
             }
         });
 
+        resetSearchButton.setText("Reset");
+        resetSearchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetSearchButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Queue Patient (Select on Table)");
+
+        jLabel7.setText("ID:");
+
+        idQueueField.setEditable(false);
+        idQueueField.setText("0");
+        idQueueField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idQueueFieldActionPerformed(evt);
+            }
+        });
+
+        queueAddButton.setText("Queue");
+        queueAddButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                queueAddButtonActionPerformed(evt);
+            }
+        });
+
+        refreshQueueButton.setText("⟳");
+        refreshQueueButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshQueueButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -160,51 +220,80 @@ public class StaffDashboard extends javax.swing.JFrame {
                 .addContainerGap(76, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel13)
+                        .addGap(121, 121, 121))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addGap(77, 77, 77)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel12)
-                                .addGap(77, 77, 77)
-                                .addComponent(nameSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(searchButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(resetSearchButton))
+                            .addComponent(nameSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel5))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(55, 55, 55)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(addButton)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(deleteButton))
-                                    .addComponent(nameInputField, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(phoneInputField, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(dobDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                        .addComponent(idInputField, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(idQueueField, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(refreshAddButton))
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))))
-                        .addGap(63, 63, 63))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(searchButton)
-                        .addGap(187, 187, 187))))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                    .addContainerGap(217, Short.MAX_VALUE)
-                    .addComponent(jLabel13)
-                    .addGap(183, 183, 183)))
+                                        .addComponent(refreshQueueButton))))
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(addButton)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(deleteButton))
+                                .addComponent(nameInputField, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(phoneInputField, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(dobDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(idInputField, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                            .addGap(47, 47, 47)
+                                            .addComponent(queueAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(refreshAddButton))))))
+                .addGap(63, 63, 63))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(91, 91, 91)
+                .addContainerGap()
+                .addComponent(jLabel13)
+                .addGap(43, 43, 43)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nameSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12))
-                .addGap(38, 38, 38)
-                .addComponent(searchButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 177, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(resetSearchButton)
+                    .addComponent(searchButton))
+                .addGap(36, 36, 36)
+                .addComponent(jLabel6)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(idQueueField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(refreshQueueButton))
+                .addGap(18, 18, 18)
+                .addComponent(queueAddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -227,54 +316,17 @@ public class StaffDashboard extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(deleteButton)
                     .addComponent(addButton))
-                .addGap(141, 141, 141))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(47, 47, 47)
-                    .addComponent(jLabel13)
-                    .addContainerGap(647, Short.MAX_VALUE)))
+                .addGap(42, 42, 42))
         );
 
         tabbedPane.addTab("Patients", jPanel2);
 
         jLabel8.setText("CALL QUEUE");
 
-        jLabel9.setText("ID:");
-
-        idQueueField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idQueueFieldActionPerformed(evt);
-            }
-        });
-
         queueCallButton.setText("Call");
         queueCallButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 queueCallButtonActionPerformed(evt);
-            }
-        });
-
-        queueSearchButton.setText("Search");
-        queueSearchButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                queueSearchButtonActionPerformed(evt);
-            }
-        });
-
-        jLabel10.setText("ADD QUEUE");
-
-        queueButton.setText("Queue");
-        queueButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                queueButtonActionPerformed(evt);
-            }
-        });
-
-        jLabel15.setText("Name:");
-
-        nameQueueField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameQueueFieldActionPerformed(evt);
             }
         });
 
@@ -301,82 +353,45 @@ public class StaffDashboard extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(99, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addGap(199, 199, 199))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel15))
-                        .addGap(61, 61, 61)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(queueCallButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel4Layout.createSequentialGroup()
-                                    .addComponent(queueSearchButton)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(queueButton))
-                                .addComponent(idQueueField)
-                                .addComponent(nameQueueField, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(55, 55, 55))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(queueDoneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(100, 100, 100))))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(130, 130, 130)
-                .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(240, 240, 240)
                 .addComponent(jLabel14)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                    .addContainerGap(221, Short.MAX_VALUE)
-                    .addComponent(jLabel10)
-                    .addGap(188, 188, 188)))
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel4Layout.createSequentialGroup()
-                    .addGap(109, 109, 109)
-                    .addComponent(queueSkipButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(274, Short.MAX_VALUE)))
+                .addGap(0, 234, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                            .addComponent(jLabel8)
+                            .addGap(99, 99, 99))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                            .addComponent(queueCallButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(88, 88, 88))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                            .addComponent(queueSkipButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(69, 69, 69)
+                            .addComponent(queueDoneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel11)
+                        .addGap(145, 145, 145)))
+                .addGap(107, 107, 107))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(98, 98, 98)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nameQueueField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(idQueueField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
-                .addGap(25, 25, 25)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(queueSearchButton)
-                    .addComponent(queueButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
+                .addContainerGap(145, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addGap(37, 37, 37)
                 .addComponent(queueCallButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(96, 96, 96)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel14))
+                .addComponent(jLabel11)
                 .addGap(29, 29, 29)
-                .addComponent(queueDoneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41))
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel4Layout.createSequentialGroup()
-                    .addGap(49, 49, 49)
-                    .addComponent(jLabel10)
-                    .addContainerGap(642, Short.MAX_VALUE)))
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                    .addContainerGap(603, Short.MAX_VALUE)
-                    .addComponent(queueSkipButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(43, 43, 43)))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(queueDoneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(queueSkipButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(99, 99, 99)
+                .addComponent(jLabel14)
+                .addGap(131, 131, 131))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -420,6 +435,8 @@ public class StaffDashboard extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(table);
 
+        tableLable.setText("XXXXXXXXXXXXXX");
+
         jMenu3.setText("Setting");
 
         logoutMenuItem.setText("Logout");
@@ -440,17 +457,56 @@ public class StaffDashboard extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(tabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1387, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1387, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(tableLable)
+                        .addGap(644, 644, 644))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(tabbedPane)
-            .addComponent(jScrollPane1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tableLable)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void setAlignLeftTable() {
+        DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
+        leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
+        table.getColumnModel().getColumn(0).setCellRenderer(leftRenderer);
+    }
+
+    private void applyDefaultSorter() {
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(table.getModel());
+        table.setRowSorter(sorter);
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+        sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+        sorter.setSortKeys(sortKeys);
+        setAlignLeftTable();
+    }
+
+    private void updateButtonState() {
+        try {
+            int id = Integer.parseInt(idInputField.getText());
+            if (id != 0) {
+                addButton.setText("Edit");
+            } else {
+                addButton.setText("Add");
+            }
+        } catch (NumberFormatException e) {
+            // If the field is empty or contains invalid text, default to "Add"
+            addButton.setText("Add");
+        }
+    }
 
     private void logoutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutMenuItemActionPerformed
         LoginForm loginForm = new LoginForm();
@@ -469,6 +525,7 @@ public class StaffDashboard extends javax.swing.JFrame {
 
     /**
      * Gets the text from the Name input field in the Patients tab.
+     *
      * @return The patient's name as a String.
      */
     public String getNameInput() {
@@ -477,6 +534,7 @@ public class StaffDashboard extends javax.swing.JFrame {
 
     /**
      * Gets the text from the Phone input field.
+     *
      * @return The patient's phone number as a String.
      */
     public String getPhoneInput() {
@@ -485,6 +543,7 @@ public class StaffDashboard extends javax.swing.JFrame {
 
     /**
      * Gets the selected date from the Date of Birth chooser.
+     *
      * @return The selected date as a java.til.Date object.
      */
     public Date getDobInput() {
@@ -493,6 +552,7 @@ public class StaffDashboard extends javax.swing.JFrame {
 
     /**
      * Gets the text from the patient search field.
+     *
      * @return The name to search for as a String.
      */
     public String getNameSearch() {
@@ -501,9 +561,10 @@ public class StaffDashboard extends javax.swing.JFrame {
 
     /**
      * Gets the text from the ID input field in the Queue tab.
+     *
      * @return The ID as an integer. Returns 0 if invalid.
      */
-    public int getIdQueueInput() {
+    public int getIdQueue() {
         try {
             return Integer.parseInt(idQueueField.getText());
         } catch (NumberFormatException e) {
@@ -513,18 +574,15 @@ public class StaffDashboard extends javax.swing.JFrame {
 
     /**
      * Gets the text from the name search field in the Queue tab.
+     *
      * @return The name to search for as a String.
      */
-    public String getNameQueueInput() {
-        return nameQueueField.getText();
-    }
-
     //==========================================================================
     // SETTERS FOR INPUT VALUES (to populate the form with data)
     //==========================================================================
-
     /**
      * Sets the text for the main ID input field.
+     *
      * @param id The integer ID to display.
      */
     public void setIdInput(int id) {
@@ -533,6 +591,7 @@ public class StaffDashboard extends javax.swing.JFrame {
 
     /**
      * Sets the text for the Name input field.
+     *
      * @param name The String name to display.
      */
     public void setNameInput(String name) {
@@ -541,6 +600,7 @@ public class StaffDashboard extends javax.swing.JFrame {
 
     /**
      * Sets the text for the Phone input field.
+     *
      * @param phone The String phone number to display.
      */
     public void setPhoneInput(String phone) {
@@ -549,14 +609,20 @@ public class StaffDashboard extends javax.swing.JFrame {
 
     /**
      * Sets the selected date for the Date of Birth chooser.
+     *
      * @param date The java.util.Date to display.
      */
     public void setDobInput(Date date) {
         dobDateChooser.setDate(date);
     }
 
+    public void setIdQueue(int id) {
+        idQueueField.setText(String.valueOf(id));
+    }
+
     /**
      * Sets the text for the Currently Calling ID label in the Queue tab.
+     *
      * @param id The integer ID to display. Use 0 or less to show "-".
      */
     public void setCurrentlyCallingId(int id) {
@@ -570,7 +636,6 @@ public class StaffDashboard extends javax.swing.JFrame {
     //==========================================================================
     // GETTERS FOR UI COMPONENTS (to access the components themselves)
     //==========================================================================
-
     public JTable getTable() {
         return table;
     }
@@ -593,12 +658,8 @@ public class StaffDashboard extends javax.swing.JFrame {
     }
 
     // --- Queue Tab Buttons ---
-    public JButton getQueueSearchButton() {
-        return queueSearchButton;
-    }
-
-    public JButton getQueueButton() {
-        return queueButton;
+    public JButton getQueueAddButton() {
+        return queueAddButton;
     }
 
     public JButton getQueueCallButton() {
@@ -607,6 +668,10 @@ public class StaffDashboard extends javax.swing.JFrame {
 
     public JButton getQueueDoneButton() {
         return queueDoneButton;
+    }
+
+    public JButton getQueueRefreshButton() {
+        return refreshQueueButton;
     }
 
     public JButton getQueueSkipButton() {
@@ -619,6 +684,7 @@ public class StaffDashboard extends javax.swing.JFrame {
 
     public void clearAddFields() {
         idInputField.setText("0");
+        idQueueField.setText("0");
         nameInputField.setText("");
         phoneInputField.setText("");
         dobDateChooser.setDate(null);
@@ -631,12 +697,15 @@ public class StaffDashboard extends javax.swing.JFrame {
             System.out.println("Loading user data now...");
             table.setModel(ControllerPatients.getTableModel());
             table.getTableHeader().setReorderingAllowed(false);
+            tableLable.setText("Patients Table");
         }
         if (selectedTitle.equals("Queue")) {
             System.out.println("Loading user data now...");
             table.setModel(ControllerQueue.getTableModel());
             table.getTableHeader().setReorderingAllowed(false);
+            tableLable.setText("Queue Table");
         }
+        applyDefaultSorter();
     }
 
     private void nameInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameInputFieldActionPerformed
@@ -658,41 +727,80 @@ public class StaffDashboard extends javax.swing.JFrame {
 
             ModelPatients patientData = new ModelPatients(id, name, phone, dob);
 
-            if (id == 0) {
-                controller.insert(this, patientData);
-            } else {
+            if (id > 0) {
                 controller.update(this, patientData);
+            } else {
+                controller.insert(this, patientData);
             }
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Invalid ID Format.", "Input Error", JOptionPane.ERROR_MESSAGE);
         }
-        ClearFields();
+        clearAddFields();
         refreshTable();
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_deleteButtonActionPerformed
+        // 1. Get the ID from the input field.
+        int id = this.getIdInput();
 
-    private void idQueueFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idQueueFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_idQueueFieldActionPerformed
+        // 2. Validate that a patient is actually selected.
+        if (id == 0) {
+            JOptionPane.showMessageDialog(this, "Please select a patient from the table to delete.", "No Patient Selected", JOptionPane.WARNING_MESSAGE);
+            return; // Stop the method here
+        }
+
+        // 3. Ask for confirmation before deleting.
+        int response = JOptionPane.showConfirmDialog(
+                this,
+                "Are you sure you want to delete patient with ID " + id + "?\nThis action cannot be undone.",
+                "Confirm Deletion",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+        );
+
+        // 4. Proceed only if the user clicks "Yes".
+        if (response == JOptionPane.YES_OPTION) {
+            // Create an instance of the controller to use its methods.
+            ControllerPatients controller = new ControllerPatients();
+
+            // Even though we only need the ID, the controller method requires a full object.
+            ModelPatients patientToDelete = new ModelPatients(id, "", "", null);
+
+            // 5. Call the controller's delete method.
+            controller.delete(patientToDelete);
+
+            // 6. Refresh the UI.
+            clearAddFields();
+            refreshTable();
+        }
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void queueCallButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_queueCallButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_queueCallButtonActionPerformed
-
-    private void queueSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_queueSearchButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_queueSearchButtonActionPerformed
 
     private void nameSearchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameSearchFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nameSearchFieldActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        // TODO add your handling code here:
+        String nameToSearch = this.getNameSearch();
+
+        if (nameToSearch.trim().isEmpty()) {
+            // If the search box is empty, just refresh the whole table
+            refreshTable();
+            return;
+        }
+
+        ControllerPatients controller = new ControllerPatients();
+        TableModel searchResults = controller.searchByName(nameToSearch);
+
+        table.setModel(searchResults);
+        table.setAutoCreateRowSorter(true);
+        setAlignLeftTable();
+        System.out.println("Search completed. Displaying " + searchResults.getRowCount() + " results.");
+        tableLable.setText("Search Result: Patients");
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void tabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabbedPaneStateChanged
@@ -702,14 +810,6 @@ public class StaffDashboard extends javax.swing.JFrame {
     private void idInputFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idInputFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_idInputFieldActionPerformed
-
-    private void queueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_queueButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_queueButtonActionPerformed
-
-    private void nameQueueFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameQueueFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameQueueFieldActionPerformed
 
     private void refreshAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshAddButtonActionPerformed
         clearAddFields();
@@ -725,31 +825,72 @@ public class StaffDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_queueSkipButtonActionPerformed
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+        int selectedTabIndex = tabbedPane.getSelectedIndex();
+        String currentTabTitle = tabbedPane.getTitleAt(selectedTabIndex);
 
-        // Get the index of the selected row
-        int selectedRow = table.getSelectedRow();
+        // --- START DEBUGGING CODE ---
+        System.out.println("DEBUG: Clicked on tab: " + currentTabTitle);
+        System.out.println("DEBUG: Table has " + table.getColumnCount() + " columns.");
+        System.out.println("DEBUG: The TableModel class is: " + table.getModel().getClass().getName());
+        // --- END DEBUGGING CODE ---
 
-        // Ensure a row is actually selected to prevent errors
-        if (selectedRow != -1) {
-            try {
-                // Get the data from the selected row, converting it to the correct type
-                Integer id = (Integer) table.getValueAt(selectedRow, 0);
-                String name = (String) table.getValueAt(selectedRow, 1);
-                String phone = (String) table.getValueAt(selectedRow, 2);
-                Date dob = (Date) table.getValueAt(selectedRow, 3);
+        if ("Patients".equals(currentTabTitle)) {
+            int selectedRow = table.getSelectedRow();
+            if (selectedRow != -1) {
+                // Check if there are enough columns before accessing them
+                if (table.getColumnCount() < 4) {
+                    JOptionPane.showMessageDialog(this, "TableModel is not configured correctly! It only has " + table.getColumnCount() + " columns.", "Model Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Stop here to prevent the error
+                }
 
-                // Call the correct setter methods to populate the input fields
-                this.setIdInput(id);
-                this.setNameInput(name);
-                this.setPhoneInput(phone);
-                this.setDobInput(dob);
+                try {
+                    Integer id = (Integer) table.getValueAt(selectedRow, 0);
+                    String name = (String) table.getValueAt(selectedRow, 1);
+                    String phone = (String) table.getValueAt(selectedRow, 2);
+                    Date dob = (Date) table.getValueAt(selectedRow, 3);
 
-            } catch (Exception e) {
-                // Display an error message if the data in the table is not in the expected format
-                JOptionPane.showMessageDialog(this, "Error reading data from table: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    this.setIdInput(id);
+                    this.setIdQueue(id);
+                    this.setNameInput(name);
+                    this.setPhoneInput(phone);
+                    this.setDobInput(dob);
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Error reading patient data from table: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
     }//GEN-LAST:event_tableMouseClicked
+
+    private void resetSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetSearchButtonActionPerformed
+        nameSearchField.setText("");
+        refreshTable();
+    }//GEN-LAST:event_resetSearchButtonActionPerformed
+
+    private void idQueueFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idQueueFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idQueueFieldActionPerformed
+
+    private void queueAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_queueAddButtonActionPerformed
+        int patientId = this.getIdInput();
+        if (patientId == 0) {
+            JOptionPane.showMessageDialog(this, "Please select a patient from the Patients table first.", "No Patient Selected", JOptionPane.WARNING_MESSAGE);
+            return; // Stop the method here.
+        }
+        // 3. Create an instance of the new queue controller.
+        ControllerQueue queueController = new ControllerQueue();
+        queueController.callQueue(patientId);
+
+        // 5. Optional but recommended: Refresh the table view.
+        // This won't show the new queue data until you implement the DAO/TableModel for it,
+        // but it's good practice to have it here.
+        refreshTable();
+    }//GEN-LAST:event_queueAddButtonActionPerformed
+
+    private void refreshQueueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshQueueButtonActionPerformed
+        clearAddFields();
+        table.clearSelection();
+    }//GEN-LAST:event_refreshQueueButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -758,7 +899,7 @@ public class StaffDashboard extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -801,18 +942,17 @@ public class StaffDashboard extends javax.swing.JFrame {
     private javax.swing.JTextField idInputField;
     private javax.swing.JTextField idQueueField;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
@@ -821,17 +961,18 @@ public class StaffDashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenuItem logoutMenuItem;
     private javax.swing.JTextField nameInputField;
-    private javax.swing.JTextField nameQueueField;
     private javax.swing.JTextField nameSearchField;
     private javax.swing.JTextField phoneInputField;
-    private javax.swing.JButton queueButton;
+    private javax.swing.JButton queueAddButton;
     private javax.swing.JButton queueCallButton;
     private javax.swing.JButton queueDoneButton;
-    private javax.swing.JButton queueSearchButton;
     private javax.swing.JButton queueSkipButton;
     private javax.swing.JButton refreshAddButton;
+    private javax.swing.JButton refreshQueueButton;
+    private javax.swing.JButton resetSearchButton;
     private javax.swing.JButton searchButton;
     private javax.swing.JTabbedPane tabbedPane;
     private javax.swing.JTable table;
+    private javax.swing.JLabel tableLable;
     // End of variables declaration//GEN-END:variables
 }
