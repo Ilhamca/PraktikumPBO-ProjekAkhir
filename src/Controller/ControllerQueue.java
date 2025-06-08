@@ -113,14 +113,17 @@ public class ControllerQueue {
 
 
         try {
+            String statusText;
             if (status == 0) {
+            statusText = "skipped";
             daoHistory.insert(historyRecord);                
             } else {
+                statusText = "finished";
             daoHistory.insertDone(historyRecord);
             }
 
             dao.delete(patientToSkip);
-            JOptionPane.showMessageDialog(view, "Patient has been skipped.", "Patient Skipped", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(view, "Patient has been " + statusText, "Patient " + statusText, JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
             // 3. This block ONLY runs if the daoHistory.insert() method failed.
             JOptionPane.showMessageDialog(view, "Error: Could not move patient to history.", "Database Error", JOptionPane.ERROR_MESSAGE);
