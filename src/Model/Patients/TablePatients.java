@@ -13,7 +13,7 @@ import javax.swing.table.AbstractTableModel;
 public class TablePatients extends AbstractTableModel {
 
     private final List<ModelPatients> patientList;
-    private final String[] columnNames = {"ID", "Name", "Date of Birth", "Gender"};
+    private final String[] columnNames = {"ID", "Name","Phone Number", "Date of Birth"};
 
     public TablePatients(List<ModelPatients> patientList) {
         this.patientList = patientList;

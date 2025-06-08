@@ -8,6 +8,7 @@ import View.Login.LoginForm;
 import Controller.ControllerPatients;
 import Controller.ControllerQueue;
 import Model.Patients.ModelPatients;
+import Model.Queue.ModelQueue;
 import Model.Users.ModelUsers;
 
 import java.util.ArrayList;
@@ -99,7 +100,7 @@ public class StaffDashboard extends javax.swing.JFrame {
         queueDoneButton = new javax.swing.JButton();
         queueSkipButton = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        idQueueLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         tableLable = new javax.swing.JLabel();
@@ -344,36 +345,31 @@ public class StaffDashboard extends javax.swing.JFrame {
             }
         });
 
-        jLabel11.setText("Currently Taking ID:");
+        jLabel11.setText("Currently Taking Patient ID:");
 
-        jLabel14.setText("-");
+        idQueueLabel.setText("-");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(240, 240, 240)
-                .addComponent(jLabel14)
-                .addGap(0, 234, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                            .addComponent(jLabel8)
-                            .addGap(99, 99, 99))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(111, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(99, 99, 99))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(queueSkipButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(69, 69, 69)
+                        .addComponent(queueDoneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(queueCallButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(88, 88, 88))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                            .addComponent(queueSkipButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(69, 69, 69)
-                            .addComponent(queueDoneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabel11)
-                        .addGap(145, 145, 145)))
+                            .addComponent(jLabel11))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(idQueueLabel)
+                        .addGap(77, 77, 77)))
                 .addGap(107, 107, 107))
         );
         jPanel4Layout.setVerticalGroup(
@@ -381,17 +377,17 @@ public class StaffDashboard extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap(145, Short.MAX_VALUE)
                 .addComponent(jLabel8)
-                .addGap(37, 37, 37)
+                .addGap(18, 18, 18)
                 .addComponent(queueCallButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(96, 96, 96)
-                .addComponent(jLabel11)
+                .addGap(112, 112, 112)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(idQueueLabel))
                 .addGap(29, 29, 29)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(queueDoneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(queueSkipButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(99, 99, 99)
-                .addComponent(jLabel14)
-                .addGap(131, 131, 131))
+                .addGap(246, 246, 246))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -580,6 +576,7 @@ public class StaffDashboard extends javax.swing.JFrame {
     //==========================================================================
     // SETTERS FOR INPUT VALUES (to populate the form with data)
     //==========================================================================
+
     /**
      * Sets the text for the main ID input field.
      *
@@ -625,13 +622,6 @@ public class StaffDashboard extends javax.swing.JFrame {
      *
      * @param id The integer ID to display. Use 0 or less to show "-".
      */
-    public void setCurrentlyCallingId(int id) {
-        if (id > 0) {
-            jLabel14.setText(String.valueOf(id));
-        } else {
-            jLabel14.setText("-");
-        }
-    }
 
     //==========================================================================
     // GETTERS FOR UI COMPONENTS (to access the components themselves)
@@ -777,7 +767,21 @@ public class StaffDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void queueCallButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_queueCallButtonActionPerformed
-        // TODO add your handling code here:
+        ControllerQueue controller = new ControllerQueue();
+
+        ModelQueue calledPatient = controller.callNextPatientInQueue(this);
+
+        if (calledPatient != null) {
+            // 4. Update the UI fields with the called patient's information
+            idQueueField.setText(String.valueOf(calledPatient.getPatientId()));
+
+            // Also update the "Currently Taking" label
+            idQueueLabel.setText(String.valueOf(calledPatient.getPatientId()));
+
+            // 5. Refresh the queue table to show the status change from WAITING to CALLED
+            
+        }
+        refreshTable();
     }//GEN-LAST:event_queueCallButtonActionPerformed
 
     private void nameSearchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameSearchFieldActionPerformed
@@ -817,11 +821,25 @@ public class StaffDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_refreshAddButtonActionPerformed
 
     private void queueDoneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_queueDoneButtonActionPerformed
-        // TODO add your handling code here:
+        int patientIdToSkip = Integer.parseInt(idQueueLabel.getText());
+        if (patientIdToSkip == 0) {
+            JOptionPane.showMessageDialog(this, "No patient is currently being called.", "Cannot Skip", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        ControllerQueue controller = new ControllerQueue();
+        controller.skipPatient(this, patientIdToSkip, 1);
+        refreshTable();
     }//GEN-LAST:event_queueDoneButtonActionPerformed
 
     private void queueSkipButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_queueSkipButtonActionPerformed
-        // TODO add your handling code here:
+        int patientIdToSkip = Integer.parseInt(idQueueLabel.getText());
+        if (patientIdToSkip == 0) {
+            JOptionPane.showMessageDialog(this, "No patient is currently being called.", "Cannot Skip", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        ControllerQueue controller = new ControllerQueue();
+        controller.skipPatient(this, patientIdToSkip, 0);
+        refreshTable();
     }//GEN-LAST:event_queueSkipButtonActionPerformed
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
@@ -879,7 +897,7 @@ public class StaffDashboard extends javax.swing.JFrame {
         }
         // 3. Create an instance of the new queue controller.
         ControllerQueue queueController = new ControllerQueue();
-        queueController.callQueue(patientId);
+        queueController.callQueue(this, patientId);
 
         // 5. Optional but recommended: Refresh the table view.
         // This won't show the new queue data until you implement the DAO/TableModel for it,
@@ -941,11 +959,11 @@ public class StaffDashboard extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser dobDateChooser;
     private javax.swing.JTextField idInputField;
     private javax.swing.JTextField idQueueField;
+    private javax.swing.JLabel idQueueLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

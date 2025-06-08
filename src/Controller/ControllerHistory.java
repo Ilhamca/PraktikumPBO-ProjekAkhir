@@ -39,4 +39,8 @@ public class ControllerHistory {
     public List<ModelHistory> getAll() {
         return daoHistory.getAll();
     }
+    
+    public void insertDone(ModelHistory history){
+        daoHistory.insertDone(history);
+    }
 }

@@ -22,13 +22,14 @@ public class DAOHistory implements InterfaceDAO<ModelHistory> {
     @Override
     public void insert(ModelHistory obj) {
         try {
-            String query = "INSERT INTO history (patient_id, queue_number, status, timestamp) VALUES (?,?,?,?)";
+            String query = "INSERT INTO history (id, patient_id, queue_number, status, date) VALUES (?,?,?,?,?)";
             PreparedStatement statement;
             statement = Connector.Connect().prepareStatement(query);
-            statement.setInt(1, obj.getPatientId());
-            statement.setInt(2, obj.getQueueNumber());
-            statement.setString(3, obj.getStatus().name());
-            statement.setTimestamp(4, Timestamp.valueOf(obj.getTimestamp()));
+            statement.setInt(1, 0);
+            statement.setInt(2, obj.getPatientId());
+            statement.setInt(3, obj.getQueueNumber());
+            statement.setString(4, "SKIPPED");
+            statement.setTimestamp(5, Timestamp.valueOf(obj.getDate()));
 
             statement.executeUpdate();
             System.out.println("Successfully inserted into history");
@@ -48,7 +49,7 @@ public class DAOHistory implements InterfaceDAO<ModelHistory> {
             statement.setInt(1, obj.getPatientId());
             statement.setInt(2, obj.getQueueNumber());
             statement.setString(3, obj.getStatus().name());
-            statement.setTimestamp(4, Timestamp.valueOf(obj.getTimestamp()));
+            statement.setTimestamp(4, Timestamp.valueOf(obj.getDate()));
             statement.setInt(5, obj.getId());
         } catch (SQLException e) {
             System.out.println("Update Failed: " + e.getLocalizedMessage());
@@ -119,5 +120,25 @@ public class DAOHistory implements InterfaceDAO<ModelHistory> {
             System.out.println("getAll Failed: " + e.getLocalizedMessage());
         }
         return list;
+    }
+
+    public void insertDone(ModelHistory obj) {
+        try {
+            String query = "INSERT INTO history (id, patient_id, queue_number, status, date) VALUES (?,?,?,?,?)";
+            PreparedStatement statement;
+            statement = Connector.Connect().prepareStatement(query);
+            statement.setInt(1, 0);
+            statement.setInt(2, obj.getPatientId());
+            statement.setInt(3, obj.getQueueNumber());
+            statement.setString(4, "DONE");
+            statement.setTimestamp(5, Timestamp.valueOf(obj.getDate()));
+
+            statement.executeUpdate();
+            System.out.println("Successfully inserted into history");
+            statement.close();
+
+        } catch (SQLException e) {
+            System.out.println("Input Failed: " + e.getLocalizedMessage());
+        }
     }
 }

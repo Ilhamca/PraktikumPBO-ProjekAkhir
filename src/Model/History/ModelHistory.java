@@ -14,7 +14,7 @@ public class ModelHistory {
 
     private int id, patientId, queueNumber;
     private Status status;
-    private LocalDateTime timestamp;
+    private LocalDateTime date;
 
     public enum Status {
         WAITING,
@@ -33,7 +33,7 @@ public class ModelHistory {
         this.patientId = patientId;
         this.queueNumber = queueNumber;
         this.status = status;
-        this.timestamp = timestamp;
+        this.date = timestamp;
     }
 
     // Getters and Setters
@@ -69,11 +69,11 @@ public class ModelHistory {
         this.status = status;
     }
 
-    public LocalDateTime getTimestamp() {
-        return timestamp;
+    public LocalDateTime getDate() {
+        return date;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 }

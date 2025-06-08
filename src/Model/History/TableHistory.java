@@ -44,7 +44,7 @@ public class TableHistory extends AbstractTableModel {
             case 1 -> history.getPatientId();
             case 2 -> history.getQueueNumber();
             case 3 -> history.getStatus().name();
-            case 4 -> history.getTimestamp();
+            case 4 -> history.getDate();
             default -> null;
         };
     }

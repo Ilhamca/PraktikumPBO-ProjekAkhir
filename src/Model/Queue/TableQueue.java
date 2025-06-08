@@ -4,11 +4,11 @@
  */
 package Model.Queue;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 /**
- *
  * @author Iam
  */
 public class TableQueue extends AbstractTableModel {
@@ -37,12 +37,39 @@ public class TableQueue extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        ModelQueue queue = queueList.get(rowIndex);
-        return switch (columnIndex) {
-            case 0 -> queue.getId();
-            case 1 -> queue.getPatientId();
-            case 2 -> queue.getStatus().name();
-            default -> null;
-        };
+        // Get the queue object for the given row
+        ModelQueue queueItem = queueList.get(rowIndex);
+
+        // Return the specific piece of data based on the column index
+        // This is where you connect your data to the columns.
+        switch (columnIndex) {
+            case 0:
+                return queueItem.getId();
+            case 1:
+                return queueItem.getPatientId();
+            case 2:
+                return queueItem.getStatus();
+            case 3:
+                // THIS IS THE KEY: Return the date object for the third column
+                return queueItem.getDate();
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        // This helps the table use the correct renderer and sorter for each column
+        switch (columnIndex) {
+            case 0:
+            case 1:
+                return Integer.class;
+            case 2:
+                return ModelQueue.Status.class;
+            case 3:
+                return LocalDateTime.class; // Identify the date column's class
+            default:
+                return Object.class;
+        }
     }
 }
