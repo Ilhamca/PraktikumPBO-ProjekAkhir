@@ -86,7 +86,7 @@ public class DAOHistory implements InterfaceDAO<ModelHistory> {
                         result.getInt("patient_id"),
                         result.getInt("queue_number"),
                         ModelHistory.Status.valueOf(result.getString("Status").toUpperCase()),
-                        result.getTimestamp("timestamp").toLocalDateTime()
+                        result.getTimestamp("Date").toLocalDateTime()
                 );
             }
             result.close();
@@ -101,7 +101,7 @@ public class DAOHistory implements InterfaceDAO<ModelHistory> {
     public List<ModelHistory> getAll() {
         List<ModelHistory> list = new ArrayList<>();
         try {
-            String query = "SELECT * FROM history ORDER BY timestamp DESC";
+            String query = "SELECT * FROM history ORDER BY date DESC";
             PreparedStatement statement = Connector.Connect().prepareStatement(query);
             var result = statement.executeQuery();
 
@@ -111,7 +111,7 @@ public class DAOHistory implements InterfaceDAO<ModelHistory> {
                         result.getInt("patient_id"),
                         result.getInt("queue_number"),
                         ModelHistory.Status.valueOf(result.getString("status").toUpperCase()),
-                        result.getTimestamp("timestamp").toLocalDateTime()
+                        result.getTimestamp("date").toLocalDateTime()
                 );
                 list.add(history);
             }

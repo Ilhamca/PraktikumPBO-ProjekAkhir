@@ -684,13 +684,13 @@ public class StaffDashboard extends javax.swing.JFrame {
         int selectedIndex = tabbedPane.getSelectedIndex();
         String selectedTitle = tabbedPane.getTitleAt(selectedIndex);
         if (selectedTitle.equals("Patients")) {
-            System.out.println("Loading user data now...");
+            System.out.println("Loading patients data now...");
             table.setModel(ControllerPatients.getTableModel());
             table.getTableHeader().setReorderingAllowed(false);
             tableLable.setText("Patients Table");
         }
         if (selectedTitle.equals("Queue")) {
-            System.out.println("Loading user data now...");
+            System.out.println("Loading queue data now...");
             table.setModel(ControllerQueue.getTableModel());
             table.getTableHeader().setReorderingAllowed(false);
             tableLable.setText("Queue Table");
@@ -717,17 +717,23 @@ public class StaffDashboard extends javax.swing.JFrame {
 
             ModelPatients patientData = new ModelPatients(id, name, phone, dob);
 
-            if (id > 0) {
-                controller.update(this, patientData);
-            } else {
-                controller.insert(this, patientData);
+            try {
+                if (id > 0) {
+                    controller.update(patientData);
+                } else {
+                    controller.insert(patientData);
+                }
+                JOptionPane.showMessageDialog(this, "Operation successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                clearAddFields();
+                refreshTable();
+            } catch (Exception e) {
+                // This code ONLY runs if insert() or update() FAILED and threw an exception.
+                JOptionPane.showMessageDialog(this, "Operation failed. Database error.", "Error", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace(); // Print the detailed error to the console for debugging
             }
-
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Invalid ID Format.", "Input Error", JOptionPane.ERROR_MESSAGE);
         }
-        clearAddFields();
-        refreshTable();
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed

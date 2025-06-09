@@ -24,18 +24,12 @@ public class ControllerPatients {
         this.dao = new DAOPatients();
     }
 
-    public void insert(StaffDashboard staffDash, ModelPatients patient) {
+    public void insert(ModelPatients patient) {
         dao.insert(patient);
-        JOptionPane.showMessageDialog(staffDash, "Patient added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-        staffDash.clearAddFields();
-        staffDash.refreshTable();
     }
 
-    public void update(StaffDashboard staffDash, ModelPatients patient) {
+    public void update(ModelPatients patient) {
         dao.update(patient);
-        JOptionPane.showMessageDialog(staffDash, "Patient updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-        staffDash.clearAddFields();
-        staffDash.refreshTable();
     }
 
     public void delete(ModelPatients patient) {

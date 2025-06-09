@@ -28,12 +28,12 @@ public class ModelHistory {
     }
 
     // Parameterized Constructor - Instantly initialize object in one line
-    public ModelHistory(int id, int patientId, int queueNumber, Status status, LocalDateTime timestamp) {
+    public ModelHistory(int id, int patientId, int queueNumber, Status status, LocalDateTime date) {
         this.id = id;
         this.patientId = patientId;
         this.queueNumber = queueNumber;
         this.status = status;
-        this.date = timestamp;
+        this.date = date;
     }
 
     // Getters and Setters

@@ -4,7 +4,6 @@
  */
 package Model.History;
 
-import Model.History.ModelHistory;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -15,7 +14,7 @@ import javax.swing.table.AbstractTableModel;
 public class TableHistory extends AbstractTableModel {
 
     private final List<ModelHistory> historyList;
-    private final String[] columnNames = {"ID", "Patient ID", "Queue Number", "Status", "Timestamp"};
+    private final String[] columnNames = {"ID", "Patient ID", "Queue Number", "Status", "Date"};
 
     public TableHistory(List<ModelHistory> historyList) {
         this.historyList = historyList;
