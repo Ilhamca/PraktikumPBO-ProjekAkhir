@@ -124,7 +124,7 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     public String getPatientSearchName() {
-        return nameField3.getText();
+        return namePatientSearch.getText();
     }
 
     public int getPatientIdInput() {
@@ -166,7 +166,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     // --- Getters for Components ---
     public javax.swing.JButton getPatientSearchButton() {
-        return addButton; // Note: Your search button is named 'addButton'
+        return searchPatientButton; // Note: Your search button is named 'addButton'
     }
 
     public javax.swing.JButton getPatientAddEditButton() {
@@ -181,6 +181,10 @@ public class Dashboard extends javax.swing.JFrame {
         return refreshAddButton;
     }
 
+    public javax.swing.JButton getPatientResetButton() {
+        return resetSearchPatientButton;
+    }
+    
     //==========================================================================
     //  USER / STAFF TAB
     //==========================================================================
@@ -224,7 +228,7 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     public javax.swing.JButton getStaffClearSearchButton() {
-        return clearStaffButton;
+        return resetStaffButton;
     }
 
     public javax.swing.JButton getStaffAddButton() {
@@ -319,8 +323,8 @@ public class Dashboard extends javax.swing.JFrame {
 
         tabbedPane = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
-        addButton = new javax.swing.JButton();
-        nameField3 = new javax.swing.JTextField();
+        searchPatientButton = new javax.swing.JButton();
+        namePatientSearch = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -335,6 +339,7 @@ public class Dashboard extends javax.swing.JFrame {
         dobDateChooser = new com.toedter.calendar.JDateChooser();
         addPatientButton = new javax.swing.JButton();
         deletePatientButton = new javax.swing.JButton();
+        resetSearchPatientButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -350,7 +355,7 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         searchStaffButton = new javax.swing.JButton();
-        clearStaffButton = new javax.swing.JButton();
+        resetStaffButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
@@ -383,16 +388,16 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        addButton.setText("Search");
-        addButton.addActionListener(new java.awt.event.ActionListener() {
+        searchPatientButton.setText("Search");
+        searchPatientButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addButtonActionPerformed(evt);
+                searchPatientButtonActionPerformed(evt);
             }
         });
 
-        nameField3.addActionListener(new java.awt.event.ActionListener() {
+        namePatientSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameField3ActionPerformed(evt);
+                namePatientSearchActionPerformed(evt);
             }
         });
 
@@ -434,6 +439,13 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
+        resetSearchPatientButton.setText("Reset");
+        resetSearchPatientButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetSearchPatientButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -442,16 +454,15 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(67, 67, 67)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel11)
+                        .addGap(76, 76, 76)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(151, 151, 151)
-                                .addComponent(addButton))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addGap(76, 76, 76)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel10)
-                                    .addComponent(nameField3, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(searchPatientButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(resetSearchPatientButton))
+                            .addComponent(jLabel10)
+                            .addComponent(namePatientSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(94, 94, 94)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -491,10 +502,12 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(83, 83, 83)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nameField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(namePatientSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11))
                 .addGap(18, 18, 18)
-                .addComponent(addButton)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(searchPatientButton)
+                    .addComponent(resetSearchPatientButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 301, Short.MAX_VALUE)
                 .addComponent(jLabel10)
                 .addGap(26, 26, 26)
@@ -588,10 +601,10 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        clearStaffButton.setText("Clear");
-        clearStaffButton.addActionListener(new java.awt.event.ActionListener() {
+        resetStaffButton.setText("Reset");
+        resetStaffButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clearStaffButtonActionPerformed(evt);
+                resetStaffButtonActionPerformed(evt);
             }
         });
 
@@ -620,7 +633,7 @@ public class Dashboard extends javax.swing.JFrame {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(searchStaffButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(clearStaffButton))
+                                .addComponent(resetStaffButton))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                 .addComponent(addStaffButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -646,7 +659,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(searchStaffButton)
-                    .addComponent(clearStaffButton))
+                    .addComponent(resetStaffButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 218, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -881,9 +894,24 @@ public class Dashboard extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_logoutMenuItemActionPerformed
 
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addButtonActionPerformed
+    private void searchPatientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchPatientButtonActionPerformed
+        String nameToSearch = this.getPatientSearchName();
+
+        if (nameToSearch.trim().isEmpty()) {
+            // If the search box is empty, just refresh the whole table
+            refreshTable();
+            return;
+        }
+
+        ControllerPatients controller = new ControllerPatients();
+        TableModel searchResults = controller.searchByName(nameToSearch);
+
+        table.setModel(searchResults);
+        table.setAutoCreateRowSorter(true);
+        setAlignLeftTable();
+        System.out.println("Search completed. Displaying " + searchResults.getRowCount() + " results.");
+        tableLable.setText("Search Result: Patients");
+    }//GEN-LAST:event_searchPatientButtonActionPerformed
 
     private void nameInputStaffFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameInputStaffFieldActionPerformed
         // TODO add your handling code here:
@@ -905,9 +933,9 @@ public class Dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_removeHistoryQueueButtonActionPerformed
 
-    private void nameField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameField3ActionPerformed
+    private void namePatientSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_namePatientSearchActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_nameField3ActionPerformed
+    }//GEN-LAST:event_namePatientSearchActionPerformed
 
     private void idInputStaffFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idInputStaffFieldActionPerformed
         // TODO add your handling code here:
@@ -933,9 +961,9 @@ public class Dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_searchStaffButtonActionPerformed
 
-    private void clearStaffButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearStaffButtonActionPerformed
+    private void resetStaffButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetStaffButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_clearStaffButtonActionPerformed
+    }//GEN-LAST:event_resetStaffButtonActionPerformed
 
     private void searchHistoryQueueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchHistoryQueueButtonActionPerformed
         // TODO add your handling code here:
@@ -1062,6 +1090,11 @@ public class Dashboard extends javax.swing.JFrame {
         refreshTable();
     }//GEN-LAST:event_tabbedPaneStateChanged
 
+    private void resetSearchPatientButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetSearchPatientButtonActionPerformed
+        namePatientSearch.setText("");
+        refreshTable();
+    }//GEN-LAST:event_resetSearchPatientButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1099,11 +1132,9 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addButton;
     private javax.swing.JButton addPatientButton;
     private javax.swing.JButton addStaffButton;
     private javax.swing.JButton clearHistoryQueueButton;
-    private javax.swing.JButton clearStaffButton;
     private javax.swing.JButton deletePatientButton;
     private javax.swing.JButton deleteStaffButton;
     private com.toedter.calendar.JDateChooser dobDateChooser;
@@ -1138,9 +1169,9 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenuItem logoutMenuItem;
-    private javax.swing.JTextField nameField3;
     private javax.swing.JTextField nameInputField;
     private javax.swing.JTextField nameInputStaffField;
+    private javax.swing.JTextField namePatientSearch;
     private javax.swing.JTextField nameRemoveHistoryQueueField2;
     private javax.swing.JTextField nameSearchStaffField;
     private javax.swing.JTextField passwordInputStaffField;
@@ -1148,7 +1179,10 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton refreshAddButton;
     private javax.swing.JButton removeHistoryQueueButton;
     private javax.swing.JButton resetIdStaffButton;
+    private javax.swing.JButton resetSearchPatientButton;
+    private javax.swing.JButton resetStaffButton;
     private javax.swing.JButton searchHistoryQueueButton;
+    private javax.swing.JButton searchPatientButton;
     private javax.swing.JButton searchStaffButton;
     private javax.swing.JTabbedPane tabbedPane;
     private javax.swing.JTable table;
