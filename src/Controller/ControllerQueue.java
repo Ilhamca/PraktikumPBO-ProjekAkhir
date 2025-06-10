@@ -94,11 +94,8 @@ public class ControllerQueue {
     }
 
     public void skipPatient(StaffDashboard view, int patientId, int status) {
-        // --- THIS IS THE FIX ---
-        // Instead of using getById(), we use the method that finds a 'CALLED'
-        // patient using their actual patientId.
         ModelQueue patientToSkip = dao.findCalledPatientByPatientId(patientId);
-        // -------------------------
+
 
         if (patientToSkip == null) {
             JOptionPane.showMessageDialog(view, "Could not find a 'CALLED' patient with ID " + patientId + ". Please 'Call' a patient first.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -125,9 +122,7 @@ public class ControllerQueue {
             dao.delete(patientToSkip);
             JOptionPane.showMessageDialog(view, "Patient has been " + statusText, "Patient " + statusText, JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
-            // 3. This block ONLY runs if the daoHistory.insert() method failed.
             JOptionPane.showMessageDialog(view, "Error: Could not move patient to history.", "Database Error", JOptionPane.ERROR_MESSAGE);
-            // It's good practice to print the actual error for debugging.
             e.printStackTrace();
         }
     }

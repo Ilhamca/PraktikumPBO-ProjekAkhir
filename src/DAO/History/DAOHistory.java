@@ -7,6 +7,8 @@ package DAO.History;
 import DAO.InterfaceDAO;
 import Model.Connector;
 import Model.History.ModelHistory;
+
+import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -14,7 +16,6 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- *
  * @author Iam
  */
 public class DAOHistory implements InterfaceDAO<ModelHistory> {
@@ -43,7 +44,7 @@ public class DAOHistory implements InterfaceDAO<ModelHistory> {
     @Override
     public void update(ModelHistory obj) {
         try {
-            String query = "UPDATE history SET patient_id = ?, queue_number = ?, status = ?, timestamp = ? WHERE id = ?";
+            String query = "UPDATE history SET patient_id = ?, queue_number = ?, status = ?, date = ? WHERE id = ?";
             PreparedStatement statement = Connector.Connect().prepareStatement(query);
 
             statement.setInt(1, obj.getPatientId());
@@ -110,8 +111,8 @@ public class DAOHistory implements InterfaceDAO<ModelHistory> {
                         result.getInt("id"),
                         result.getInt("patient_id"),
                         result.getInt("queue_number"),
-                        ModelHistory.Status.valueOf(result.getString("status").toUpperCase()),
-                        result.getTimestamp("date").toLocalDateTime()
+                        ModelHistory.Status.valueOf(result.getString("Status").toUpperCase()),
+                        result.getTimestamp("Date").toLocalDateTime()
                 );
                 list.add(history);
             }
@@ -141,4 +142,30 @@ public class DAOHistory implements InterfaceDAO<ModelHistory> {
             System.out.println("Input Failed: " + e.getLocalizedMessage());
         }
     }
+    
+    public List<ModelHistory> searchByPatientId(int patientId) {
+    List<ModelHistory> list = new ArrayList<>();
+    // This query correctly finds all records for one patient
+    String query = "SELECT * FROM history WHERE patient_id = ? ORDER BY date DESC";
+    
+    try (PreparedStatement statement = Connector.Connect().prepareStatement(query)) {
+        statement.setInt(1, patientId);
+        ResultSet result = statement.executeQuery();
+
+        while (result.next()) {
+            ModelHistory history = new ModelHistory(
+                result.getInt("id"),
+                result.getInt("patient_id"),
+                result.getInt("queue_number"),
+                ModelHistory.Status.valueOf(result.getString("status").toUpperCase()),
+                result.getTimestamp("date").toLocalDateTime()
+                // If you add the name back, get it here
+            );
+            list.add(history);
+        }
+    } catch (SQLException e) {
+        System.out.println("History Search Failed: " + e.getLocalizedMessage());
+    }
+    return list;
+}
 }

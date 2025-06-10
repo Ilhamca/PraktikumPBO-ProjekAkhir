@@ -6,8 +6,10 @@ package DAO.Users;
 
 import DAO.InterfaceDAO;
 import Model.Connector;
+import Model.Patients.ModelPatients;
 import Model.Users.ModelUsers;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -142,7 +144,6 @@ public class DAOUsers implements InterfaceDAO<ModelUsers> {
         }
         return user;
     }
-        
 
     public static boolean insertUser(String username, String password) {
         try {
@@ -159,5 +160,33 @@ public class DAOUsers implements InterfaceDAO<ModelUsers> {
             System.err.println("DB Error: " + e.getMessage());
             return false;
         }
+    }
+
+    public List<ModelUsers> searchByName(String name) {
+        List<ModelUsers> userList = new ArrayList<>();
+
+        String query = "SELECT * FROM users WHERE LOWER(username) LIKE LOWER(?);";
+
+        try (PreparedStatement statement = Connector.Connect().prepareStatement(query)) {
+            statement.setString(1, "%" + name + "%");
+            try (ResultSet result = statement.executeQuery()) {
+                while (result.next()) {
+                    // For each row, create a new ModelPatients object
+                    ModelUsers user = new ModelUsers(
+                            result.getInt("id"),
+                            result.getString("username"),
+                            result.getString("password"),
+                            ModelUsers.Role.valueOf(result.getString("role").toUpperCase())
+                    );
+                    userList.add(user);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Search Failed: " + e.getLocalizedMessage());
+            // In case of an error, an empty list will be returned.
+        }
+
+        return userList;
     }
 }

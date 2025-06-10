@@ -6,12 +6,11 @@ package View.AdminDashboard;
 
 import Controller.ControllerHistory;
 import Controller.ControllerPatients;
-import Controller.ControllerQueue;
 import Controller.ControllerUsers;
+import Model.History.ModelHistory;
 import Model.Patients.ModelPatients;
 import Model.Users.ModelUsers;
 import View.Login.LoginForm;
-import View.StaffDashboard.StaffDashboard;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +31,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     /**
      * Creates new form Dashboard
+     * @param user
      */
     public Dashboard(ModelUsers user) {
         initComponents();
@@ -42,16 +42,36 @@ public class Dashboard extends javax.swing.JFrame {
             @Override
             public void insertUpdate(javax.swing.event.DocumentEvent e) {
                 updateButtonState();
+                updateButtonStaffState();
             }
 
             @Override
             public void removeUpdate(javax.swing.event.DocumentEvent e) {
                 updateButtonState();
+                updateButtonStaffState();
             }
 
             @Override
             public void changedUpdate(javax.swing.event.DocumentEvent e) {
                 updateButtonState();
+                updateButtonStaffState();
+            }
+        });
+
+        idInputStaffField.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            @Override
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                updateButtonStaffState();
+            }
+
+            @Override
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                updateButtonStaffState();
+            }
+
+            @Override
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                updateButtonStaffState();
             }
         });
         setAlignLeftTable();
@@ -65,6 +85,13 @@ public class Dashboard extends javax.swing.JFrame {
         dobDateChooser.setDate(null);
     }
 
+    public void clearStaffFields() {
+        idInputStaffField.setText("0");
+        nameInputStaffField.setText("");
+        passwordInputStaffField.setText("");
+        buttonGroup1.clearSelection(); // This deselects both Admin and Staff radio buttons
+    }
+
     private void setAlignLeftTable() {
         DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
         leftRenderer.setHorizontalAlignment(SwingConstants.LEFT);
@@ -72,7 +99,7 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     private void applyDefaultSorter() {
-        if (table.getModel().getColumnCount() == 0){
+        if (table.getModel().getColumnCount() == 0) {
             System.out.println("Debug: Skipping cause no columns");
             table.setRowSorter(null);
             return;
@@ -123,6 +150,20 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }
 
+    private void updateButtonStaffState() {
+        try {
+            int id = Integer.parseInt(idInputStaffField.getText());
+            if (id != 0) {
+                addStaffButton.setText("Edit");
+            } else {
+                addStaffButton.setText("Add");
+            }
+        } catch (NumberFormatException e) {
+            // If the field is empty or contains invalid text, default to "Add"
+            addStaffButton.setText("Add");
+        }
+    }
+
     public String getPatientSearchName() {
         return namePatientSearch.getText();
     }
@@ -132,6 +173,55 @@ public class Dashboard extends javax.swing.JFrame {
             return Integer.parseInt(idInputField.getText());
         } catch (NumberFormatException e) {
             return 0;
+        }
+    }
+
+    private ModelUsers.Role getSelectedRole() {
+        if (adminRadioButton.isSelected()) {
+            return ModelUsers.Role.ADMIN;
+        } else if (staffRadioButton.isSelected()) {
+            return ModelUsers.Role.STAFF;
+        } else {
+            return null; // No role was selected
+        }
+    }
+
+    private void setStaffRoleInput(ModelUsers.Role role) {
+        // Note: Your ButtonGroup in the designer is likely named buttonGroup1
+        if (role == null) {
+            buttonGroup1.clearSelection();
+            return;
+        }
+
+        switch (role) {
+            case ADMIN:
+                adminRadioButton.setSelected(true);
+                break;
+            case STAFF:
+                staffRadioButton.setSelected(true);
+                break;
+            default:
+                buttonGroup1.clearSelection();
+                break;
+        }
+    }
+
+    private void setStaffRoleSelection(ModelUsers.Role role) {
+        if (role == null) {
+            buttonGroup1.clearSelection(); // Make sure your ButtonGroup is named buttonGroup1
+            return;
+        }
+
+        switch (role) {
+            case ADMIN:
+                adminRadioButton.setSelected(true);
+                break;
+            case STAFF:
+                staffRadioButton.setSelected(true);
+                break;
+            default:
+                buttonGroup1.clearSelection();
+                break;
         }
     }
 
@@ -184,7 +274,7 @@ public class Dashboard extends javax.swing.JFrame {
     public javax.swing.JButton getPatientResetButton() {
         return resetSearchPatientButton;
     }
-    
+
     //==========================================================================
     //  USER / STAFF TAB
     //==========================================================================
@@ -259,9 +349,7 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }
 
-    public String getHistoryRemoveName() {
-        return nameRemoveHistoryQueueField2.getText();
-    }
+
 
     // --- Setters for Input Values ---
     public void setHistorySearchId(int id) {
@@ -272,9 +360,6 @@ public class Dashboard extends javax.swing.JFrame {
         idRemoveQueueHistoryField.setText(String.valueOf(id));
     }
 
-    public void setHistoryRemoveName(String name) {
-        nameRemoveHistoryQueueField2.setText(name);
-    }
 
     // --- Getters for Components ---
     public javax.swing.JButton getHistorySearchButton() {
@@ -321,6 +406,7 @@ public class Dashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         tabbedPane = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         searchPatientButton = new javax.swing.JButton();
@@ -356,11 +442,12 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         searchStaffButton = new javax.swing.JButton();
         resetStaffButton = new javax.swing.JButton();
+        jLabel23 = new javax.swing.JLabel();
+        staffRadioButton = new javax.swing.JRadioButton();
+        adminRadioButton = new javax.swing.JRadioButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        nameRemoveHistoryQueueField2 = new javax.swing.JTextField();
         removeHistoryQueueButton = new javax.swing.JButton();
         idRemoveQueueHistoryField = new javax.swing.JTextField();
         idResetHistoryQueueButton = new javax.swing.JButton();
@@ -608,6 +695,14 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
+        jLabel23.setText("Role:");
+
+        buttonGroup1.add(staffRadioButton);
+        staffRadioButton.setText("Staff");
+
+        buttonGroup1.add(adminRadioButton);
+        adminRadioButton.setText("Admin");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -627,24 +722,29 @@ public class Dashboard extends javax.swing.JFrame {
                             .addComponent(jLabel6)
                             .addComponent(jLabel7)
                             .addComponent(jLabel15)
-                            .addComponent(jLabel12))
-                        .addGap(38, 38, 38)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel23))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(searchStaffButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(resetStaffButton))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(addStaffButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(deleteStaffButton))
                             .addComponent(nameInputStaffField)
                             .addComponent(passwordInputStaffField)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                 .addComponent(idInputStaffField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(resetIdStaffButton))
-                            .addComponent(nameSearchStaffField, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(nameSearchStaffField, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(addStaffButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(deleteStaffButton))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(adminRadioButton)
+                                .addGap(53, 53, 53)
+                                .addComponent(staffRadioButton)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -660,7 +760,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(searchStaffButton)
                     .addComponent(resetStaffButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 218, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 220, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -671,28 +771,25 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nameInputStaffField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(passwordInputStaffField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41)
+                    .addComponent(passwordInputStaffField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel23)
+                    .addComponent(adminRadioButton)
+                    .addComponent(staffRadioButton))
+                .addGap(91, 91, 91)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addStaffButton)
                     .addComponent(deleteStaffButton))
-                .addGap(173, 173, 173))
+                .addGap(106, 106, 106))
         );
 
         tabbedPane.addTab("User", jPanel3);
 
         jLabel8.setText("Remove History Queue");
-
-        jLabel9.setText("Name:");
-
-        nameRemoveHistoryQueueField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameRemoveHistoryQueueField2ActionPerformed(evt);
-            }
-        });
 
         removeHistoryQueueButton.setText("Remove");
         removeHistoryQueueButton.addActionListener(new java.awt.event.ActionListener() {
@@ -753,10 +850,6 @@ public class Dashboard extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addGap(18, 18, 18)
-                                .addComponent(nameRemoveHistoryQueueField2, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGap(108, 108, 108)
                                 .addComponent(jLabel8))
                             .addGroup(jPanel4Layout.createSequentialGroup()
@@ -785,13 +878,9 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(idRemoveQueueHistoryField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16)
                     .addComponent(idResetHistoryQueueButton))
-                .addGap(4, 4, 4)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nameRemoveHistoryQueueField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
                 .addGap(18, 18, 18)
                 .addComponent(removeHistoryQueueButton)
-                .addGap(78, 78, 78)
+                .addGap(101, 101, 101)
                 .addComponent(jLabel21)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -869,10 +958,12 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(tabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 901, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(tableLable)
-                        .addGap(402, 402, 402))))
+                        .addGap(402, 402, 402))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 882, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -918,19 +1009,70 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_nameInputStaffFieldActionPerformed
 
     private void addStaffButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStaffButtonActionPerformed
-        // TODO add your handling code here:
+        try {
+            int id = this.getStaffIdInput();
+            String name = this.getStaffNameInput();
+            String password = this.getStaffPasswordInput();
+            ModelUsers.Role role = this.getSelectedRole(); // Use our new helper method
+
+            // --- Validation ---
+            if (name.trim().isEmpty() || password.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Username and Password must be filled!", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (role == null) {
+                JOptionPane.showMessageDialog(this, "A Role (Admin or Staff) must be selected!", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            // --------------------
+
+            ModelUsers userData = new ModelUsers(id, name, password, role);
+            ControllerUsers controller = new ControllerUsers();
+
+            // This logic uses the unified controller pattern we established
+            try {
+                if (id == 0) { // Add new user
+                    controller.insert(userData);
+                } else { // Update existing user
+                    controller.update(userData);
+                }
+                JOptionPane.showMessageDialog(this, "User operation successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                refreshTable();
+                // You might want a clearStaffFields() method here
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Operation failed: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            }
+            clearStaffFields();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid ID Format.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_addStaffButtonActionPerformed
 
     private void deleteStaffButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteStaffButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_deleteStaffButtonActionPerformed
 
-    private void nameRemoveHistoryQueueField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameRemoveHistoryQueueField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameRemoveHistoryQueueField2ActionPerformed
-
     private void removeHistoryQueueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeHistoryQueueButtonActionPerformed
-        // TODO add your handling code here:
+        int historyIdToRemove = this.getHistoryRemoveId();
+        if (historyIdToRemove == 0) {
+            JOptionPane.showMessageDialog(this, "Please select a record from the history table to remove.", "No Record Selected", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int response = JOptionPane.showConfirmDialog(this, "Are you sure you want to permanently delete this history record (ID: " + historyIdToRemove + ")?", "Confirm Deletion", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+        if (response == JOptionPane.YES_OPTION) {
+            ControllerHistory controller = new ControllerHistory();
+            ModelHistory historyToDelete = new ModelHistory();
+            historyToDelete.setId(historyIdToRemove);
+            controller.delete(historyToDelete);
+            JOptionPane.showMessageDialog(this, "History record deleted successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+            setHistoryRemoveId(0);
+            refreshTable();
+        }
+        refreshTable();
     }//GEN-LAST:event_removeHistoryQueueButtonActionPerformed
 
     private void namePatientSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_namePatientSearchActionPerformed
@@ -942,7 +1084,8 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_idInputStaffFieldActionPerformed
 
     private void resetIdStaffButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetIdStaffButtonActionPerformed
-        // TODO add your handling code here:
+        clearStaffFields();
+        table.clearSelection();
     }//GEN-LAST:event_resetIdStaffButtonActionPerformed
 
     private void idRemoveQueueHistoryFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idRemoveQueueHistoryFieldActionPerformed
@@ -950,7 +1093,8 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_idRemoveQueueHistoryFieldActionPerformed
 
     private void idResetHistoryQueueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idResetHistoryQueueButtonActionPerformed
-        // TODO add your handling code here:
+        idRemoveQueueHistoryField.setText("");
+        table.clearSelection();
     }//GEN-LAST:event_idResetHistoryQueueButtonActionPerformed
 
     private void nameSearchStaffFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameSearchStaffFieldActionPerformed
@@ -958,19 +1102,49 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_nameSearchStaffFieldActionPerformed
 
     private void searchStaffButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchStaffButtonActionPerformed
-        // TODO add your handling code here:
+        String nameToSearch = this.getStaffSearchName();
+
+        if (nameToSearch.trim().isEmpty()) {
+            // If the search box is empty, just refresh the whole table
+            refreshTable();
+            return;
+        }
+
+        ControllerUsers controller = new ControllerUsers();
+        TableModel searchResults = controller.searchByName(nameToSearch);
+
+        table.setModel(searchResults);
+        table.setAutoCreateRowSorter(true);
+        setAlignLeftTable();
+        System.out.println("Search completed. Displaying " + searchResults.getRowCount() + " results.");
+        tableLable.setText("Search Result: Patients");
     }//GEN-LAST:event_searchStaffButtonActionPerformed
 
     private void resetStaffButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetStaffButtonActionPerformed
-        // TODO add your handling code here:
+        nameSearchStaffField.setText("0");
+        refreshTable();
     }//GEN-LAST:event_resetStaffButtonActionPerformed
 
     private void searchHistoryQueueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchHistoryQueueButtonActionPerformed
-        // TODO add your handling code here:
+        int patientIdToSearch = this.getHistorySearchId();
+        if (patientIdToSearch <= 0) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid Patient ID to search.", "Input Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+
+        ControllerHistory controller = new ControllerHistory();
+
+
+        TableModel searchResult = controller.searchByPatientId(patientIdToSearch);
+        table.setModel(searchResult);
+        applyDefaultSorter();
+        tableLable.setText("Search Result: History for Patient ID " + patientIdToSearch);
     }//GEN-LAST:event_searchHistoryQueueButtonActionPerformed
 
     private void clearHistoryQueueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearHistoryQueueButtonActionPerformed
-        // TODO add your handling code here:
+        idSearchHistoryQueueSpinner.setValue(0);
+        refreshTable();
     }//GEN-LAST:event_clearHistoryQueueButtonActionPerformed
 
     private void refreshAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshAddButtonActionPerformed
@@ -1014,38 +1188,70 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_addPatientButtonActionPerformed
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+        // First, check if the "Patient" tab is the one currently active
         int selectedTabIndex = tabbedPane.getSelectedIndex();
         String currentTabTitle = tabbedPane.getTitleAt(selectedTabIndex);
+        int selectedViewRow = table.getSelectedRow();
+        if ("Patient".equals(currentTabTitle)) {
 
-        // --- START DEBUGGING CODE ---
-        System.out.println("DEBUG: Clicked on tab: " + currentTabTitle);
-        System.out.println("DEBUG: Table has " + table.getColumnCount() + " columns.");
-        System.out.println("DEBUG: The TableModel class is: " + table.getModel().getClass().getName());
-        // --- END DEBUGGING CODE ---
+            // This gets the row index as it appears on the screen (the "view" index)
+            // Check if a row was actually selected
+            if (selectedViewRow != -1) {
 
-        if ("Patients".equals(currentTabTitle)) {
-            int selectedRow = table.getSelectedRow();
-            if (selectedRow != -1) {
-                // Check if there are enough columns before accessing them
-                if (table.getColumnCount() < 4) {
-                    JOptionPane.showMessageDialog(this, "TableModel is not configured correctly! It only has " + table.getColumnCount() + " columns.", "Model Error", JOptionPane.ERROR_MESSAGE);
-                    return; // Stop here to prevent the error
-                }
+                // This is a crucial step for when the table is sorted:
+                // Convert the visual row index to the actual data model index.
+                int modelRow = table.convertRowIndexToModel(selectedViewRow);
 
                 try {
-                    Integer id = (Integer) table.getValueAt(selectedRow, 0);
-                    String name = (String) table.getValueAt(selectedRow, 1);
-                    String phone = (String) table.getValueAt(selectedRow, 2);
-                    Date dob = (Date) table.getValueAt(selectedRow, 3);
+                    // Get data from the MODEL using the corrected modelRow index
+                    Integer id = (Integer) table.getModel().getValueAt(modelRow, 0);
+                    String name = (String) table.getModel().getValueAt(modelRow, 1);
+                    String phone = (String) table.getModel().getValueAt(modelRow, 2);
+                    Date dob = (Date) table.getModel().getValueAt(modelRow, 3);
 
+                    // Use your own setter methods to populate the form fields
                     this.setPatientIdInput(id);
                     this.setPatientNameInput(name);
                     this.setPatientPhoneInput(phone);
                     this.setPatientDobInput(dob);
 
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "Error reading patient data from table: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    // This will catch any errors if the data in the table is not in the expected format
+                    JOptionPane.showMessageDialog(this, "Error reading data from table: " + e.getMessage(), "Data Error", JOptionPane.ERROR_MESSAGE);
                 }
+            }
+        } else if ("User".equals(currentTabTitle)) {
+            if (selectedViewRow != -1) {
+                // Convert view row index to model row index to be safe with sorting
+                int modelRow = table.convertRowIndexToModel(selectedViewRow);
+
+                try {
+                    // 1. Get all data from the correct columns for the User
+                    Integer id = (Integer) table.getModel().getValueAt(modelRow, 0);
+                    String name = (String) table.getModel().getValueAt(modelRow, 1);
+                    ModelUsers.Role role = (ModelUsers.Role) table.getModel().getValueAt(modelRow, 2);
+
+                    // 2. Populate the correct User/Staff form fields using their setters
+                    this.setStaffIdInput(id);
+                    this.setStaffNameInput(name);
+                    this.setStaffPasswordInput("");
+                    this.setStaffRoleSelection(role);          // This correctly sets the Role radio button
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Error reading user data from table: " + e.getMessage(), "Data Error", JOptionPane.ERROR_MESSAGE);
+                    e.printStackTrace(); // Very useful for debugging
+                }
+            }
+        } else if ("Queue History".equals(currentTabTitle)) {
+            try {
+                int modelRow = table.convertRowIndexToModel(selectedViewRow);
+                Integer historyId = (Integer) table.getModel().getValueAt(modelRow, 0);
+
+                // Populate the "Remove History Queue" form
+                this.setHistoryRemoveId(historyId);
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error reading history data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_tableMouseClicked
@@ -1134,6 +1340,8 @@ public class Dashboard extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addPatientButton;
     private javax.swing.JButton addStaffButton;
+    private javax.swing.JRadioButton adminRadioButton;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton clearHistoryQueueButton;
     private javax.swing.JButton deletePatientButton;
     private javax.swing.JButton deleteStaffButton;
@@ -1156,11 +1364,11 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
@@ -1172,7 +1380,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JTextField nameInputField;
     private javax.swing.JTextField nameInputStaffField;
     private javax.swing.JTextField namePatientSearch;
-    private javax.swing.JTextField nameRemoveHistoryQueueField2;
     private javax.swing.JTextField nameSearchStaffField;
     private javax.swing.JTextField passwordInputStaffField;
     private javax.swing.JTextField phoneInputField;
@@ -1184,6 +1391,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton searchHistoryQueueButton;
     private javax.swing.JButton searchPatientButton;
     private javax.swing.JButton searchStaffButton;
+    private javax.swing.JRadioButton staffRadioButton;
     private javax.swing.JTabbedPane tabbedPane;
     private javax.swing.JTable table;
     private javax.swing.JLabel tableLable;

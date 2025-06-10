@@ -17,8 +17,6 @@ public class ModelHistory {
     private LocalDateTime date;
 
     public enum Status {
-        WAITING,
-        CALLED,
         SKIPPED,
         DONE
     }
@@ -76,4 +74,5 @@ public class ModelHistory {
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
+
 }

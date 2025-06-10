@@ -7,6 +7,8 @@ package Controller;
 import View.StaffDashboard.StaffDashboard;
 import View.AdminDashboard.Dashboard;
 import DAO.Users.DAOUsers;
+import Model.Patients.ModelPatients;
+import Model.Patients.TablePatients;
 import Model.Users.ModelUsers;
 import Model.Users.TableUsers;
 
@@ -66,7 +68,6 @@ public class ControllerUsers {
                     adminDash.setLocationRelativeTo(null);
                     adminDash.setVisible(true);
                 }
-                
 
                 case STAFF -> {
                     StaffDashboard staffDash = new StaffDashboard(user);
@@ -102,5 +103,11 @@ public class ControllerUsers {
         } else {
             JOptionPane.showMessageDialog(parentPanel, "Failed to add user.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public TableModel searchByName(String name) {
+        List<ModelUsers> searchResult = dao.searchByName(name);
+        TableModel resultModel = new TableUsers(searchResult);
+        return resultModel;
     }
 }

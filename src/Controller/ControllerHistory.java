@@ -7,8 +7,6 @@ package Controller;
 import DAO.History.DAOHistory;
 import Model.History.ModelHistory;
 import Model.History.TableHistory;
-import Model.Patients.ModelPatients;
-import Model.Patients.TablePatients;
 import java.util.List;
 import javax.swing.table.TableModel;
 
@@ -36,8 +34,11 @@ public class ControllerHistory {
         daoHistory.delete(history);
     }
 
-    public ModelHistory getById(int id) {
-        return daoHistory.getById(id);
+    public TableModel searchByPatientId(int id) {
+        //ModelHistory resultList =  daoHistory.getById(id);
+        List<ModelHistory> resultList = daoHistory.searchByPatientId(id);
+        //return new TableHistory(resultList);
+        return new TableHistory(resultList);
     }
 
     public List<ModelHistory> getAll() {

@@ -45,7 +45,7 @@ public class TableUsers extends AbstractTableModel {
             case 1 ->
                 user.getUsername();
             case 2 ->
-                user.getRole().toString();
+                user.getRole();
             default ->
                 null;
         };
